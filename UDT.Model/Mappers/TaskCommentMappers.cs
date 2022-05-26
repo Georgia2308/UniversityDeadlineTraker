@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UDT.Model.Entities;
+﻿using UDT.Model.Entities;
 using UDT.Model.ViewModels;
 
 namespace UDT.Model.Mappers

@@ -7,7 +7,7 @@ using UDT.Model.Entities;
 using UDT.Model.Enums;
 using UDT.Repository;
 
-namespace UDT.Business.Implementation
+namespace UDT.Business.Services
 {
     public class SubjectService : ISubjectService
     {

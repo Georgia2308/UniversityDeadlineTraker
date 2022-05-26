@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
 using UDT.Business.Interfaces;
 using UDT.Model.Entities;
 using UDT.Repository;
 using UDT.Business.Task;
-using Microsoft.EntityFrameworkCore;
 
-namespace UDT.Business.Implementation
+namespace UDT.Business.Services
 {
     public class Service : IService
     {

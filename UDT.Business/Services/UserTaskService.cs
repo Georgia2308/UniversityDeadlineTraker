@@ -5,7 +5,7 @@ using UDT.Business.Interfaces;
 using UDT.Model.Entities;
 using UDT.Repository;
 
-namespace UDT.Business.Implementation
+namespace UDT.Business.Services
 {
     public class UserTaskService : IUserTaskService
     {

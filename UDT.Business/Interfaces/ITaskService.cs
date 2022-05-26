@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UDT.Repository;
-using UDT.Model.Entities;
+﻿using System.Collections.Generic;
 using UDT.Model.ViewModels;
 using System.Threading.Tasks;
 

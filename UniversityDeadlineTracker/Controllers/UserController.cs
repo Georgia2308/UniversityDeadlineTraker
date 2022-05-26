@@ -7,7 +7,6 @@ using UDT.Model.ViewModels;
 using UDT.Model.Mappers;
 using System.Linq;
 using UniversityDeadlineTracker.Filters;
-using System.Collections.Generic;
 
 namespace UniversityDeadlineTracker.Controllers
 {

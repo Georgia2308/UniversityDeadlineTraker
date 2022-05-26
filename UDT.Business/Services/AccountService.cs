@@ -1,19 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 using UDT.Business.Interfaces;
-using UDT.Model;
+using UDT.Model.Authentication;
 using UDT.Model.Entities;
 using UDT.Model.Mappers;
 using UDT.Repository;
 
-namespace UDT.Business.Implementation
+namespace UDT.Business.Services
 {
     public class AccountService : IAccountService
     {

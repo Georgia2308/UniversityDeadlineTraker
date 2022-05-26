@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using UDT.Model.Enums;
 
 namespace UDT.Model.ViewModels

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using UDT.Repository;
-using UDT.Model.Entities;
-using UDT.Model.ViewModels;
-using UDT.Model.Mappers;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using UDT.Business.Task;
+using UDT.Model.Mappers;
+using UDT.Model.ViewModels;
+using UDT.Repository;
 
-namespace UDT.Business.Task
+namespace UDT.Business.Services
 {
     public class ServiceTask : IServiceTask
     {

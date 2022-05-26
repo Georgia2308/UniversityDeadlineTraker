@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.Extensions.Options;
 using System;
-using System.Collections.Generic;
 using System.Text;
 using UDT.Business.Interfaces;
-using UDT.Model;
+using UDT.Model.Authentication;
 
 namespace UDT.Business.Helpers
 {

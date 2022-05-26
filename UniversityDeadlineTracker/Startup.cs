@@ -5,12 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using UDT.Business.Implementation;
+using UDT.Business.Services;
 using UDT.Business.Interfaces;
 using UDT.Repository;
 using UDT.Business.Task;
 using UDT.Business.Helpers;
-using UDT.Model;
+using UDT.Model.Authentication;
 using UniversityDeadlineTracker.Middlewares;
 
 namespace UniversityDeadlineTracker

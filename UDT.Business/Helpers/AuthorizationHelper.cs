@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -10,7 +8,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using UDT.Business.Interfaces;
-using UDT.Model;
+using UDT.Model.Authentication;
 using UDT.Model.Entities;
 
 namespace UDT.Business.Helpers

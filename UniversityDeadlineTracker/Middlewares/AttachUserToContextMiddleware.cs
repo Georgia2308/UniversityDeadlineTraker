@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using UDT.Repository;
 
-
 namespace UniversityDeadlineTracker.Middlewares
 {
 	public class AttachUserToContextMiddleware

@@ -1,14 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using UDT.Business.Interfaces;
 using UDT.Model.Entities;
 using UDT.Repository;
 
-namespace UDT.Business.Implementation
+namespace UDT.Business.Services
 {
     public class TaskCommentService : ITaskCommentService
     {

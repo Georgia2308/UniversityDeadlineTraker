@@ -1,6 +1,4 @@
-﻿
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using UDT.Model.Entities;
 
 namespace UDT.Business.Interfaces

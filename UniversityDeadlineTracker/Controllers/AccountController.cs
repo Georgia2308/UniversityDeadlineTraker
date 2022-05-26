@@ -1,11 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using UDT.Business.Interfaces;
-using UDT.Model.Entities;
-using UDT.Model.ViewModels;
-using UDT.Model.Mappers;
-using System.Linq;
-using UDT.Model;
+using UDT.Model.Authentication;
 using UniversityDeadlineTracker.Filters;
 
 namespace UniversityDeadlineTracker.Controllers

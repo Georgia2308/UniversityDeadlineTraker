@@ -1,6 +1,6 @@
 ﻿using UDT.Model.ViewModels;
 
-namespace UDT.Model
+namespace UDT.Model.Authentication
 {
     public class AuthenticationResponse
     {

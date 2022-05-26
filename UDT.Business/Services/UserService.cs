@@ -1,13 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UDT.Business.Interfaces;
-using UDT.Model;
 using UDT.Model.Entities;
 using UDT.Repository;
 
-namespace UDT.Business.Implementation
+namespace UDT.Business.Services
 {
     public class UserService : IUserService
     {
