@@ -9,7 +9,7 @@ export const Default = (props) => {
     return (
         <div className="default-component" style={{marginTop: props.main ? '3%' : '7%'}}>
             {props.main ?
-                <p className="bigger">Welcome to <span className="accent">University Deadline Tracker</span>!</p>
+                <p className="bigger">Welcome to <span className="accent">University Task Management System</span>!</p>
                 :
                 <p className="bigger">Join our <span className="accent">community</span>!</p>
             }

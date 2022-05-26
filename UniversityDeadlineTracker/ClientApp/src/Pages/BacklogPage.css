@@ -98,7 +98,7 @@
 
 .table-container .arrow:hover {
     background-color: var(--LIGHT_GREY);
-    color: var(--ORANGE_ACCENT);
+    color: var(--PURPLE_ACCENT);
 }
 
 .table-container .table th {

@@ -11,7 +11,7 @@
 }
 
 .default-component .accent {
-    color: var(--ORANGE_ACCENT);
+    color: var(--PURPLE_ACCENT);
 }
 
 .default-component .button {

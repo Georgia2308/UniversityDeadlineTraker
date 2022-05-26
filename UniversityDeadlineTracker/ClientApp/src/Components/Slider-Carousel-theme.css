@@ -155,12 +155,12 @@
     text-align: center;
 
     opacity: 0.25;
-    color: var(--ORANGE_ACCENT);
+    color: var(--PURPLE_ACCENT);
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 .slick-dots li.slick-active button:before {
     opacity: 1;
-    color: var(--ORANGE_ACCENT);
+    color: var(--PURPLE_ACCENT);
 }

@@ -11,7 +11,7 @@
 }
 
 .login-page .orange {
-    color: var(--ORANGE_ACCENT);
+    color: var(--PURPLE_ACCENT);
 }
 
 .login-page .button {
@@ -87,7 +87,7 @@
 }
 
 .login-page .subject-board .subject .subject-name {
-    color: var(--ORANGE_ACCENT);
+    color: var(--PURPLE_ACCENT);
     transition-duration: .5s;
     margin-top: 3px;
 }

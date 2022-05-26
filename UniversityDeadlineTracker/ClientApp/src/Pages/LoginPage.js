@@ -8,7 +8,7 @@ import {Default} from "../Components/Default";
 import {Login} from "../Components/Login";
 import {getUser} from "../Utils/Token";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
-import {LIGHTER_GREY, ORANGE_ACCENT} from "../Utils/Constants";
+import {LIGHTER_GREY, PURPLE_ACCENT} from "../Utils/Constants";
 
 export const LoginPage = (props) => {
         let history = useHistory();
@@ -32,7 +32,7 @@ export const LoginPage = (props) => {
                             })
                         }}>
                             <div className="subject-year"
-                                 style={{backgroundColor: subject.type === SubjectType.OBLIGATORIU ? ORANGE_ACCENT : LIGHTER_GREY}}>
+                                 style={{backgroundColor: subject.type === SubjectType.OBLIGATORIU ? PURPLE_ACCENT : LIGHTER_GREY}}>
                                 y{subject.year}
                             </div>
                             <div className="subject-name">{subject.name}</div>
