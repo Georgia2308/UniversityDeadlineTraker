@@ -45,7 +45,6 @@ namespace UDT.Model.Mappers
                 Code = user.Code,
                 ProfilePictureURL = user.ProfilePictureURL,
                 DateOfBirth = user.DateOfBirth,
-
                 Subjects = user.Subjects?.Select(subject => subject.Id).ToList(),
             } : null;
 

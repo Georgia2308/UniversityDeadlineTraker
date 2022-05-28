@@ -8,6 +8,7 @@ import LoginPage from "./Pages/LoginPage";
 import {BoardPage} from "./Pages/BoardPage";
 import BacklogPage from "./Pages/BacklogPage";
 import CommunityPage from "./Pages/CommunityPage";
+import ProfilePage from "./Pages/ProfilePage";
 
 export const App = () => {
     const {token, setToken} = useToken();
@@ -28,6 +29,9 @@ export const App = () => {
                     </Route>
                     <Route path={Pages.COMMUNITY}>
                         <CommunityPage token={token}/>
+                    </Route>
+                    <Route path={Pages.PROFILE}>
+                        <ProfilePage token={token}/>
                     </Route>
                 </Switch>
             </Router>

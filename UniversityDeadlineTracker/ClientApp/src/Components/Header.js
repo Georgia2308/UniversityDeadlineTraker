@@ -5,13 +5,8 @@ import { Pages } from "../Utils/Enums";
 import Avatar from "@mui/material/Avatar";
 import { Divider, ListItemIcon, Menu, MenuItem, Stack } from "@mui/material";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-
-import ArchitectureIcon from "@mui/icons-material/Architecture";
-import AutoStoriesIcon from "@mui/icons-material/AutoStories";
 import EventNoteIcon from "@mui/icons-material/EventNote";
-
 import { AccountCircle, Logout, Settings, Login } from "@mui/icons-material";
-import Logo from "../Resources/timetable.png";
 import { getUser } from "../Utils/Token";
 
 export const Header = (props) => {
@@ -49,7 +44,6 @@ export const Header = (props) => {
                         }}
                     >
                         <span className="orange">ORGANISE</span>IT
-                        {/* <span className="orange">DEAD</span>LIИE */}
                     </div>
                 </Stack>
                 <div
@@ -124,7 +118,7 @@ export const Header = (props) => {
                             className="dropdown-item"
                             onClick={() => {
                                 handleClose();
-                                history.push(Pages.BOARD);
+                                history.push(Pages.PROFILE);
                             }}
                         >
                             <ListItemIcon>
@@ -140,7 +134,7 @@ export const Header = (props) => {
                             className="dropdown-item"
                             onClick={() => {
                                 handleClose();
-                                history.push(Pages.BOARD);
+                                history.push(Pages.PROFILE);
                             }}
                         >
                             <ListItemIcon>
