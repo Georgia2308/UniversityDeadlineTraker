@@ -134,7 +134,7 @@ export const Header = (props) => {
                             className="dropdown-item"
                             onClick={() => {
                                 handleClose();
-                                history.push(Pages.PROFILE);
+                                history.push(Pages.SETTINGS);
                             }}
                         >
                             <ListItemIcon>

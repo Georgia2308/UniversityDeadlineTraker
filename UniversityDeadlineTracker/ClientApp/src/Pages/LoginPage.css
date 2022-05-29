@@ -38,7 +38,7 @@
 }
 
 .login-page .subject-board {
-    width: 17vw;
+    width: 25vw;
     margin: 25px auto 0;
     padding-top: 1px;
     height: 45vh;
@@ -50,7 +50,7 @@
 
 .login-page .subject-board .filter {
     position: absolute;
-    width: 17vw;
+    width: 25vw;
     height: 45vh;
     border-radius: 5px;
     background: linear-gradient(transparent, transparent, #101010bb);

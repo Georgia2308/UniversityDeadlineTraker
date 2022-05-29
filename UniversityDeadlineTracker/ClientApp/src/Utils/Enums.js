@@ -3,7 +3,8 @@
     BOARD: "/board",
     BACKLOG: "/backlog",
     COMMUNITY: "/community",
-    PROFILE: "/profile"
+    PROFILE: "/profile",
+    SETTINGS: "/settings",
 };
 
 export const Status = {

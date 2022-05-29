@@ -49,7 +49,7 @@ export const LoginPage = (props) => {
                 props.token ?
                     <div className="login-page">
                         <p className="hello">Hello <span className="orange">{getUser().username}</span>!</p>
-                        <p>Welcome back to your University Deadline Tracker!</p>
+                        <p>Welcome back to your University Task Management System!</p>
                         <div className="button" onClick={() => history.push(Pages.BOARD)}>Check your Boards!</div>
                         <p className="enroll">Enroll to subjects to stay up to date with upcoming tasks!</p>
                         <div className="subject-board">
