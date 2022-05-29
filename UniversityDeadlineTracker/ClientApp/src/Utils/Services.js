@@ -120,6 +120,23 @@ export const getUnassignedSubjects = async () => {
     );
 };
 
+export const getAssignedSubjects = async () => {
+    const requestOptions = {
+        method: "GET",
+        headers: { Authorization: "Bearer " + getToken() },
+    };
+    const subjects = await fetch(
+        `api/subjects/assigned/${getUser().id}`,
+        requestOptions
+    ).then((data) => data.json());
+    return Promise.all(
+        subjects.map(async (subject) => {
+            const teacher = await getTeacherforSubject(subject.id);
+            return { ...subject, teacher: teacher };
+        })
+    );
+};
+
 export const enrollUserToSubject = async (subjectId) => {
     const requestOptions = {
         method: "POST",

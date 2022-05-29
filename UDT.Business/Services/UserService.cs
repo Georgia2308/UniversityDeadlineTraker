@@ -62,7 +62,8 @@ namespace UDT.Business.Services
                 .FirstOrDefaultAsync(u => u.Id == user.Id);
 
             if (existingUser == null) return null;
-            
+
+            user.Password = existingUser.Password;
             _context.Entry(existingUser).CurrentValues.SetValues(user);
             
             existingUser.Subjects.Clear();

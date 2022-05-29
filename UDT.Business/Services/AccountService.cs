@@ -29,6 +29,7 @@ namespace UDT.Business.Services
         public async Task<AuthenticationResponse> AuthenticateAsync(string username, string password)
         {
             User loggingInUser = _context.Users
+                .Include(u => u.Subjects)
                 .FirstOrDefault(x => x.Username == username && x.Password == _hashingHelper.HashPassword(password));
             var authenticationResponse = new AuthenticationResponse()
             {
