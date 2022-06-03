@@ -1,0 +1,375 @@
+.settings-page {
+    display: flex;
+    flex-direction: row;
+    margin: 30px auto;
+    padding: 30px;
+    width: 90vw;
+    height: 80%;
+    background-color: var(--DARK_GREY);
+    border-radius: 10px;
+}
+/* LEFT */
+.settings-page .left {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+}
+.settings-page .left .infos {
+    display: flex;
+    flex-direction: row;
+}
+.settings-page .left .infos .profile-pic {
+    margin: 0 20px 0 0;
+}
+.settings-page .left .names {
+    display: flex;
+    flex-direction: column;
+}
+.settings-page .left .infos .names .name {
+    font-size: 22px;
+    font-weight: 600;
+    color: white;
+}
+.settings-page .left .infos .names .usrname {
+    font-size: 16px;
+    font-weight: 100;
+    color: #757575;
+}
+.settings-page .left .hor-line {
+    width: 100%;
+    height: 0.7px;
+    background-color: #757575;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+/* LEFT MENU */
+.settings-page .left .setting {
+    display: flex;
+    flex-direction: row;
+    padding: 5px;
+    margin: 7px;
+}
+.settings-page .left .setting .text {
+    color: #bebebe;
+    margin-left: 7px;
+}
+.setting:hover {
+    cursor: pointer;
+    background-color: var(--LIGHT_GREY);
+    border-radius: 10px;
+}
+.setting:hover .icon {
+    color: white;
+}
+.setting:hover .text {
+    color: white !important;
+}
+/* RIGHT */
+.settings-page .right {
+    width: 100%;
+    margin-left: 40px;
+    border: 1px solid #757575;
+    border-radius: 10px;
+    padding: 25px 30px 30px 30px;
+    color: var(--LIGHTER_GREY);
+}
+/* GENERAL */
+.settings-page .right .general .title {
+    font-size: 22px;
+    font-weight: 500;
+}
+.settings-page .right .general .hor-line {
+    width: 100%;
+    height: 0.7px;
+    background-color: #757575;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.settings-page .right .general .general-components {
+    display: flex;
+    flex-direction: row;
+}
+.settings-page .right .general .general-components .stack {
+    width: 50%;
+}
+/* CHANGE PROFILE PIC */
+.settings-page .right .general .general-components .change-text {
+    color: white;
+    margin-bottom: 10px;
+    margin-left: 125px;
+}
+.settings-page .right .general .general-components .avatar {
+    position: relative;
+    margin-left: 100px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.settings-page .right .general .general-components .avatar .change {
+    visibility: hidden;
+    position: absolute;
+    top: 40%;
+    left: 30%;
+    z-index: 1;
+
+    color: white;
+    font-size: 20px;
+    font-weight: 400;
+}
+.settings-page
+    .right
+    .general
+    .general-components
+    .avatar:hover
+    .profile-pic-edit {
+    opacity: 0.5;
+}
+.settings-page .right .general .general-components .avatar:hover .change {
+    visibility: visible !important;
+}
+.settings-page .right .general .button {
+    margin: 20px auto;
+    text-align: center;
+    font-size: medium;
+    color: white;
+    width: 100%;
+    height: 40px;
+    line-height: 36px;
+    border: 1px solid #5f5f5f;
+    border-radius: 10px;
+    background-color: var(--DARKER_GREY);
+    cursor: pointer;
+    transition-duration: 0.5s;
+    width: 230px;
+}
+.settings-page .right .general .button:hover {
+    background-color: #202020;
+    border: 1px solid #757575;
+}
+/* ACCOUNT */
+.settings-page .right .account .title {
+    font-size: 22px;
+    font-weight: 500;
+}
+.settings-page .right .account .hor-line {
+    width: 100%;
+    height: 0.7px;
+    background-color: #757575;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.settings-page .right .account .stack {
+    width: 50%;
+}
+.settings-page .right .account .button {
+    margin: 20px 0 50px 0;
+    text-align: center;
+    font-size: medium;
+    color: white;
+    width: 100%;
+    height: 40px;
+    line-height: 36px;
+    border: 1px solid #5f5f5f;
+    border-radius: 10px;
+    background-color: var(--DARKER_GREY);
+    cursor: pointer;
+    transition-duration: 0.5s;
+    width: 230px;
+}
+.settings-page .right .account .button:hover {
+    background-color: #202020;
+    border: 1px solid #757575;
+}
+.settings-page .right .account .title-delete {
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--RED_ACCENT);
+}
+.settings-page .right .account .delete-text {
+    font-size: 13px;
+}
+.settings-page .right .account .button-delete {
+    margin: 20px 0 20px 0;
+    text-align: center;
+    font-size: medium;
+    color: var(--RED_ACCENT);
+    width: 100%;
+    height: 40px;
+    line-height: 36px;
+    border: 1px solid #5f5f5f;
+    border-radius: 10px;
+    background-color: var(--DARKER_GREY);
+    cursor: pointer;
+    transition-duration: 0.5s;
+    width: 230px;
+}
+.settings-page .right .account .button-delete:hover {
+    color: white;
+    background-color: var(--RED_ACCENT);
+    border: 1px solid #757575;
+}
+/* NOTIFICATIONS */
+.settings-page .right .notifications .title {
+    font-size: 22px;
+    font-weight: 500;
+}
+.settings-page .right .notifications .hor-line {
+    width: 100%;
+    height: 0.7px;
+    background-color: #757575;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.settings-page .right .notifications span {
+    color: var(--LIGHTER_GREY);
+}
+/* APPEARANCE */
+.settings-page .right .appearance .title {
+    font-size: 22px;
+    font-weight: 500;
+}
+.settings-page .right .appearance .hor-line {
+    width: 100%;
+    height: 0.7px;
+    background-color: #757575;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+#demo-radio-buttons-group-label {
+    color: var(--LIGHTER_GREY) !important;
+}
+.settings-page .right .appearance .option-dark {
+    padding: 10px;
+    margin: 10px 30px 10px 0;
+    height: 170px;
+    width: 300px;
+    border: 1px solid var(--LIGHTER_GREY);
+    border-radius: 10px;
+}
+.settings-page .right .appearance .option-light {
+    padding: 10px;
+    margin: 10px 30px 10px 0;
+    height: 170px;
+    width: 300px;
+    border: 1px solid var(--LIGHTER_GREY);
+    border-radius: 10px;
+}
+/* PREVIEW */
+.settings-page .right .appearance .preview {
+    height: 80%;
+    width: 100%;
+    border: 1px solid var(--DARKER_GREY);
+}
+.settings-page .right .appearance .preview .header {
+    position: relative;
+    height: 10%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.settings-page .right .appearance .option-dark .preview .header {
+    background-color: var(--DARKER_GREY);
+}
+.settings-page .right .appearance .option-light .preview .header {
+    background-color: rgb(207, 207, 207);
+}
+.settings-page .right .appearance .preview .header .logo {
+    height: 6px;
+    width: 30px;
+    margin: 3px;
+    background-color: var(--PURPLE_ACCENT);
+    border-radius: 5px;
+}
+.settings-page .right .appearance .preview .header .tab {
+    height: 6px;
+    width: 20px;
+    margin: 3px;
+    border-radius: 5px;
+}
+.settings-page .right .appearance .option-dark .preview .header .tab {
+    background-color: var(--LIGHTER_GREY);
+}
+.settings-page .right .appearance .option-light .preview .header .tab {
+    background-color: var(--LIGHTER_GREY);
+}
+.settings-page .right .appearance .preview .header .pic {
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    margin: 1px;
+    border-radius: 5px;
+    right: 3px;
+}
+.settings-page .right .appearance .option-dark .preview .header .pic {
+    background-color: var(--LIGHTER_GREY);
+}
+.settings-page .right .appearance .option-light .preview .header .pic {
+    background-color: var(--LIGHTER_GREY);
+}
+.settings-page .right .appearance .preview .body {
+    height: 90%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+.settings-page .right .appearance .option-dark .preview .body {
+    background-color: var(--DARKEST_GREY);
+}
+.settings-page .right .appearance .option-light .preview .body {
+    background-color: white;
+}
+.settings-page .right .appearance .preview .body .content {
+    height: 90%;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    margin: auto;
+    border-radius: 5px;
+}
+.settings-page .right .appearance .option-dark .preview .body .content {
+    background-color: var(--DARK_GREY);
+}
+.settings-page .right .appearance .option-light .preview .body .content {
+    background-color: rgb(234, 234, 234);
+}
+.settings-page .right .appearance .preview .body .content .prev-left {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+.settings-page .right .appearance .preview .body .content .prev-right {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+.settings-page
+    .right
+    .appearance
+    .preview
+    .body
+    .content
+    .prev-left
+    .content-text {
+    height: 6px;
+    width: 20px;
+    margin: 3px;
+    background-color: var(--LIGHTER_GREY);
+    border-radius: 5px;
+}
+.settings-page
+    .right
+    .appearance
+    .preview
+    .body
+    .content
+    .prev-right
+    .content-text {
+    height: 6px;
+    width: 50px;
+    margin: 10px;
+    background-color: var(--LIGHTER_GREY);
+    border-radius: 5px;
+}
+
+.settings-page .right .appearance .accent {
+    margin: 20px 0 20px 0;
+}
