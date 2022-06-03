@@ -8,7 +8,7 @@ import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRound
 import FiberManualRecordTwoToneIcon from "@mui/icons-material/FiberManualRecordTwoTone";
 import ArrowRightTwoToneIcon from "@mui/icons-material/ArrowRightTwoTone";
 import { TaskCard } from "./TaskCard";
-import { PURPLE_ACCENT } from "../Utils/Constants.js";
+import { ACCENT_COLOR } from "../Utils/Constants.js";
 
 export const SimpleSlider = (props) => {
     let sliderRef = useRef(null);
@@ -84,7 +84,7 @@ const NextArrow = (props) => {
                 position: "absolute",
                 top: "134px",
                 right: "-50px",
-                color: PURPLE_ACCENT,
+                color: ACCENT_COLOR,
             }}
             onClick={onClick}
         />
@@ -104,7 +104,7 @@ const PrevArrow = (props) => {
                 position: "absolute",
                 top: "134px",
                 left: "-50px",
-                color: PURPLE_ACCENT,
+                color: ACCENT_COLOR,
             }}
             onClick={onClick}
         />

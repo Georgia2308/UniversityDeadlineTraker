@@ -22,7 +22,7 @@ header .navmenu .title {
     line-height: 50px;
     font-size: x-large;
     cursor: pointer;
-    transition-duration: .5s;
+    transition-duration: 0.5s;
 }
 
 header .navmenu .title:hover {
@@ -30,12 +30,12 @@ header .navmenu .title:hover {
 }
 
 header .orange {
-    color: var(--PURPLE_ACCENT);
-    transition-duration: .5s;
+    /* color: var(--PURPLE_ACCENT); */
+    transition-duration: 0.5s;
 }
 
-header .title:hover .orange{
-    color:white;
+header .title:hover .orange {
+    color: white;
 }
 
 header .navmenu .link {
@@ -43,7 +43,7 @@ header .navmenu .link {
     line-height: 50px;
     font-weight: 100;
     cursor: pointer;
-    transition-duration: .5s;
+    transition-duration: 0.5s;
 }
 
 header .navmenu .selected {
@@ -57,7 +57,7 @@ header .navmenu .selected:after {
     content: "";
     position: relative;
     display: block;
-    height: .5px;
+    height: 0.5px;
     background: white;
     transition: width 0.3s ease 0s, left 0.3s ease 0s;
     top: -22%;
@@ -73,7 +73,7 @@ header .navmenu .link:after {
     content: "";
     position: relative;
     display: block;
-    height: .5px;
+    height: 0.5px;
     background: var(--PURPLE_ACCENT);
     transition: width 0.3s ease 0s, left 0.3s ease 0s;
     width: 0;
@@ -91,7 +91,7 @@ header .navmenu .link:hover:after {
 header .right {
     float: right;
     cursor: pointer;
-    transition-duration: .2s;
+    transition-duration: 0.2s;
     margin-right: 10px;
 }
 
@@ -117,7 +117,7 @@ header .right .dropdown-icon {
 .dropdown .MuiMenu-list {
     background-color: var(--DARKER_GREY);
     border-radius: 5px;
-    border: .2px solid var(--LIGHT_GREY);
+    border: 0.2px solid var(--LIGHT_GREY);
 }
 
 .dropdown .dropdown-logged-user {
@@ -133,7 +133,7 @@ header .right .dropdown-icon {
 
 .dropdown .name {
     color: var(--PURPLE_ACCENT);
-    transition-duration: .5s;
+    transition-duration: 0.5s;
 }
 
 .dropdown .MuiDivider-root {
@@ -143,7 +143,7 @@ header .right .dropdown-icon {
 .dropdown .dropdown-item {
     background-color: var(--DARKER_GREY) !important;
     height: 30px !important;
-    transition-duration: .5s !important;
+    transition-duration: 0.5s !important;
     color: var(--LIGHTER_GREY) !important;
 }
 
@@ -159,7 +159,7 @@ header .right .dropdown-icon {
 .dropdown .logout {
     background-color: var(--DARKER_GREY) !important;
     height: 30px !important;
-    transition-duration: .5s !important;
+    transition-duration: 0.5s !important;
     color: var(--LIGHTER_GREY) !important;
 }
 

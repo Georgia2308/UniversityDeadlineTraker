@@ -13,7 +13,7 @@ import { updateUser } from "../Utils/Services";
 import { Stack, TextField } from "@mui/material";
 import { LIGHTER_GREY, RED_ACCENT } from "../Utils/Constants";
 import AlertDialog from "../Components/AlertDialog";
-import { PURPLE_ACCENT } from "../Utils/Constants";
+import { ACCENT_COLOR } from "../Utils/Constants";
 
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
@@ -29,7 +29,7 @@ import { HexColorPicker } from "react-colorful";
 const SettingsPage = (props) => {
     const [user, setUser] = useState(getUser());
     const [checked, setChecked] = React.useState([true, false]);
-    const [color, setColor] = useState(PURPLE_ACCENT);
+    const [color, setColor] = useState(ACCENT_COLOR);
     const genericProps = {
         required: false,
         variant: "filled",
@@ -53,9 +53,9 @@ const SettingsPage = (props) => {
                         checked={checked[0]}
                         onChange={handleChange2}
                         sx={{
-                            color: PURPLE_ACCENT,
+                            color: ACCENT_COLOR,
                             "&.Mui-checked": {
-                                color: PURPLE_ACCENT,
+                                color: ACCENT_COLOR,
                             },
                         }}
                     />
@@ -68,9 +68,9 @@ const SettingsPage = (props) => {
                         checked={checked[1]}
                         onChange={handleChange3}
                         sx={{
-                            color: PURPLE_ACCENT,
+                            color: ACCENT_COLOR,
                             "&.Mui-checked": {
-                                color: PURPLE_ACCENT,
+                                color: ACCENT_COLOR,
                             },
                         }}
                     />
@@ -491,9 +491,9 @@ const SettingsPage = (props) => {
                             control={
                                 <Checkbox
                                     sx={{
-                                        color: PURPLE_ACCENT,
+                                        color: ACCENT_COLOR,
                                         "&.Mui-checked": {
-                                            color: PURPLE_ACCENT,
+                                            color: ACCENT_COLOR,
                                         },
                                     }}
                                     checked={checked[0] && checked[1]}
@@ -519,7 +519,7 @@ const SettingsPage = (props) => {
                             name="radio-buttons-group"
                         >
                             <div className="option-dark">
-                                {getPreview(PURPLE_ACCENT)}
+                                {getPreview(ACCENT_COLOR)}
                                 <FormControlLabel
                                     value="dark"
                                     control={
@@ -527,7 +527,7 @@ const SettingsPage = (props) => {
                                             sx={{
                                                 color: LIGHTER_GREY,
                                                 "&.Mui-checked": {
-                                                    color: PURPLE_ACCENT,
+                                                    color: ACCENT_COLOR,
                                                 },
                                             }}
                                         />
@@ -536,7 +536,7 @@ const SettingsPage = (props) => {
                                 />
                             </div>
                             <div className="option-light">
-                                {getPreview(PURPLE_ACCENT)}
+                                {getPreview(ACCENT_COLOR)}
                                 <FormControlLabel
                                     value="light"
                                     control={
@@ -544,7 +544,7 @@ const SettingsPage = (props) => {
                                             sx={{
                                                 color: LIGHTER_GREY,
                                                 "&.Mui-checked": {
-                                                    color: PURPLE_ACCENT,
+                                                    color: ACCENT_COLOR,
                                                 },
                                             }}
                                         />
@@ -553,6 +553,11 @@ const SettingsPage = (props) => {
                                 />
                             </div>
                         </RadioGroup>
+                        <div
+                            className="button-theme"
+                        >
+                            Save theme
+                        </div>
                     </FormControl>
                     <div className="accent">
                         Choose the accent color of your app.
@@ -568,6 +573,23 @@ const SettingsPage = (props) => {
                             Preview for light mode
                         </div>
                     </Stack>
+                    <div
+                        className="button-theme"
+                        // onClick={() => {
+                        //     updateUser(user).then((response) => {
+                        //         if (response.status === 200) {
+                        //             sessionStorage.setItem(
+                        //                 "user",
+                        //                 JSON.stringify(user)
+                        //             );
+                        //             alert("Changes saved succesfully!");
+                        //             // displayAlert();
+                        //         } else alert(response);
+                        //     });
+                        // }}
+                    >
+                        Save accent color
+                    </div>
                 </div>
             </div>
         </div>

@@ -22,6 +22,9 @@ namespace UDT.Model.Mappers
                 Code = userViewModel.Code,
                 ProfilePictureURL = userViewModel.ProfilePictureURL,
                 DateOfBirth = userViewModel.DateOfBirth,
+                AccentColor = userViewModel.AccentColor,
+                DarkMode = userViewModel.DarkMode,
+                NotificationPreferences = userViewModel.NotificationPreferences,
                 Subjects = userViewModel.Subjects?.Select(id => new Subject {
                     Id = id
                 }).ToList(),
@@ -45,6 +48,9 @@ namespace UDT.Model.Mappers
                 Code = user.Code,
                 ProfilePictureURL = user.ProfilePictureURL,
                 DateOfBirth = user.DateOfBirth,
+                AccentColor = user.AccentColor,
+                DarkMode = user.DarkMode,
+                NotificationPreferences = user.NotificationPreferences,
                 Subjects = user.Subjects?.Select(subject => subject.Id).ToList(),
             } : null;
 
@@ -65,6 +71,9 @@ namespace UDT.Model.Mappers
                 Code = userUpdateViewModel.Code,
                 ProfilePictureURL = userUpdateViewModel.ProfilePictureURL,
                 DateOfBirth = userUpdateViewModel.DateOfBirth,
+                AccentColor = userUpdateViewModel.AccentColor,
+                DarkMode = userUpdateViewModel.DarkMode,
+                NotificationPreferences = userUpdateViewModel.NotificationPreferences,
                 Subjects = userUpdateViewModel.Subjects?.Select(id => new Subject
                 {
                     Id = id

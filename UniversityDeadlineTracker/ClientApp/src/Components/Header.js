@@ -8,6 +8,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import { AccountCircle, Logout, Settings, Login } from "@mui/icons-material";
 import { getUser } from "../Utils/Token";
+import { getAccentColor, ACCENT_COLOR } from "../Utils/Constants";
 
 export const Header = (props) => {
     let history = useHistory();
@@ -43,7 +44,13 @@ export const Header = (props) => {
                             history.push(Pages.HOME);
                         }}
                     >
-                        <span className="orange">ORGANISE</span>IT
+                        <span
+                            className="orange"
+                            style={{ color: ACCENT_COLOR }}
+                        >
+                            ORGANISE
+                        </span>
+                        IT
                     </div>
                 </Stack>
                 <div

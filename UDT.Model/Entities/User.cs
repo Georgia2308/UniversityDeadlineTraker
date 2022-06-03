@@ -21,5 +21,8 @@ namespace UDT.Model.Entities
         public List<Subject> Subjects { get; set; }
         public string RefreshToken { get; set; }
         public DateTime? RefreshTokenExpiryTime { get; set; }
+        public string AccentColor { get; set; }
+        public bool DarkMode { get; set; }
+        public int NotificationPreferences { get; set; }
     }
 }

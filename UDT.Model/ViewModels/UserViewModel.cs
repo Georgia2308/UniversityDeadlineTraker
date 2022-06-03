@@ -18,5 +18,8 @@ namespace UDT.Model.ViewModels
         public string ProfilePictureURL { get; set; }
         public DateTime DateOfBirth { get; set; }
         public List<int> Subjects { get; set; }
+        public string AccentColor { get; set; }
+        public bool DarkMode { get; set; }
+        public int NotificationPreferences { get; set; }
     }
 }

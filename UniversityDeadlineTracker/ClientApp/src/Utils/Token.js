@@ -17,6 +17,11 @@ export const useToken = () => {
             sessionStorage.setItem("token", userToken);
             sessionStorage.setItem("refreshToken", refreshToken);
             sessionStorage.setItem("user", JSON.stringify(userData));
+            if (userData?.accentColor)
+                document.documentElement.style.setProperty(
+                    "--MAIN-ACCENT",
+                    userData.accentColor
+                );
         }
         setToken(userToken);
     };
