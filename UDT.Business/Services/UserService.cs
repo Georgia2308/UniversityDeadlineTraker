@@ -1,8 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using UDT.Business.Interfaces;
 using UDT.Model.Entities;
+using UDT.Model.Enums;
 using UDT.Repository;
 
 namespace UDT.Business.Services
@@ -20,7 +22,7 @@ namespace UDT.Business.Services
 
         public async Task<User> AddAsync(User user)
         {
-            if(await _context.Users.AnyAsync(u => u.Username == user.Username))
+            if (await _context.Users.AnyAsync(u => u.Username == user.Username))
             {
                 return null;
             }
@@ -50,6 +52,11 @@ namespace UDT.Business.Services
             return await _context.Users.ToListAsync();
         }
 
+        public IAsyncEnumerable<User> GetAllProfsAsync()
+        {
+            return _context.Users.Where(user => user.Role == UserRole.Teacher).AsAsyncEnumerable();
+        }
+
         public async Task<User> GetByIDAsync(int id)
         {
             return await _context.Users.FirstOrDefaultAsync(user => user.Id == id);
@@ -65,14 +72,14 @@ namespace UDT.Business.Services
 
             user.Password = existingUser.Password;
             _context.Entry(existingUser).CurrentValues.SetValues(user);
-            
+
             existingUser.Subjects.Clear();
-            user.Subjects.ForEach(userSubject => 
+            user.Subjects.ForEach(userSubject =>
                 existingUser.Subjects.Add(
                     _context.Subjects.FirstOrDefaultAsync(subject => subject.Id == userSubject.Id).Result
-                    )
-                );
-                
+                )
+            );
+
             await _context.SaveChangesAsync();
 
             return existingUser;
@@ -82,6 +89,5 @@ namespace UDT.Business.Services
         {
             return await _context.Users.Include(u => u.Subjects).FirstOrDefaultAsync(user => user.Id == id);
         }
-
     }
 }

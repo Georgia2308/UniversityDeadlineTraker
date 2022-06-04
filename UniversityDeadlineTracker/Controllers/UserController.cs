@@ -47,6 +47,13 @@ namespace UniversityDeadlineTracker.Controllers
             );
         }
 
+        [HttpGet]
+        [Route("teachers")]
+        public IActionResult GetAllProfsAsync([FromRoute] int id)
+        {
+            return Ok(_userService.GetAllProfsAsync());
+        }
+
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] UserCreationViewModel userCreationViewModel)
         {

@@ -10,6 +10,8 @@ namespace UDT.Business.Interfaces
 
         Task<IEnumerable<User>> GetAllAsync();
 
+        IAsyncEnumerable<User> GetAllProfsAsync();
+
         Task<User> AddAsync(User user);
 
         Task<bool> DeleteAsync(int id);

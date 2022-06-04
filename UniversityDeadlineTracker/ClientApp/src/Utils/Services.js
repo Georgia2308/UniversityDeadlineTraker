@@ -39,6 +39,16 @@ export const updateUser = (user) => {
     return fetch(`api/users/${user.id}`, requestOptions);
 };
 
+export const getAllProfs = () => {
+    const requestOptions = {
+        method: "GET",
+        headers: { Authorization: "Bearer " + getToken() },
+    };
+    return fetch(`api/users/teachers`, requestOptions).then((data) =>
+        data.json()
+    );
+};
+
 // usertasks
 
 export const getUserTasksForUser = async () => {
@@ -91,6 +101,17 @@ export const getTeacherforSubject = (subjectId) => {
     return fetch(`api/subjects/teacher/${subjectId}`, requestOptions).then(
         (data) => data.json()
     );
+};
+
+export const getSubjectsForTeacher = (id) => {
+    const requestOptions = {
+        method: "GET",
+        headers: { Authorization: "Bearer " + getToken() },
+    };
+    return fetch(
+        `api/subjects/assigned/${id}`,
+        requestOptions
+    ).then((data) => data.json());
 };
 
 export const getSubjectById = (id) => {

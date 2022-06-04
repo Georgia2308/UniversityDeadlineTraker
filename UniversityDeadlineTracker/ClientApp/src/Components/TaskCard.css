@@ -2,21 +2,21 @@
     max-width: 230px;
     max-height: 150px;
     margin-bottom: 15px;
-    border-radius: 15px;
+    border-radius: 10px;
     position: relative;
 }
 
 .slider-component .MuiCardContent-root {
     min-width: 230px;
     min-height: 150px;
-    background-color: #b7bcd1;
+    background-color: #939a9d;
     display: flex;
     flex-direction: column;
-    transition-duration: .7s;
+    transition-duration: 0.7s;
 }
 
 .slider-component .MuiCardContent-root:hover {
-    background-color: #5a6263;
+    background-color: #606060;
 }
 
 .slider-component .MuiCardContent-root:hover .cardheader {
@@ -34,7 +34,14 @@
 .slider-component .MuiCardContent-root:hover .card-checkbox {
     display: block !important;
 }
-
+.slider-component .MuiCardContent-root:hover .card-open {
+    display: block !important;
+}
+.slider-component .MuiCardContent-root:hover .stack {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: space-between;
+}
 .card-component {
     display: flex;
     flex-direction: column;
@@ -119,4 +126,17 @@
 .card-component .card-checkbox .MuiTypography-root {
     font-size: 10px !important;
     color: white;
+}
+
+.card-component .card-open {
+    display: none !important;
+    width: 20px;
+    height: 20px;
+    margin: 10px 0 0 0;
+    padding: 0;
+    color: white;
+    cursor: pointer;
+}
+.card-component .stack {
+    display: none;
 }

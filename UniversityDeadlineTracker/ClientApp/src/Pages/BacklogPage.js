@@ -150,8 +150,8 @@ const BacklogPage = (props) => {
                                 <TableBody className="table-body">
                                     {filteredTasks.sort(getComparator(order, orderBy))
                                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                        .map((row) => (
-                                            <Row key={row.id} row={row}/>
+                                        .map((userTask) => (
+                                            <Row userTask={userTask}/>
                                         ))}
                                 </TableBody>
                             </Table>
@@ -185,7 +185,7 @@ export default BacklogPage;
 
 
 const Row = (props) => {
-        const {row} = props;
+        const {userTask} = props;
         const [open, setOpen] = React.useState(false);
 
         const getStatus = (status) => {
@@ -231,7 +231,7 @@ const Row = (props) => {
             <React.Fragment>
                 <TableRow
                     className="table-body-row"
-                    key={row.task.name}
+                    key={userTask.task.name}
                     sx={{
                         "&:last-child td, &:last-child th": {
                             border: 0,
@@ -249,22 +249,22 @@ const Row = (props) => {
                         component="th"
                         scope="row"
                     >
-                        {row.task.id}
+                        {userTask.task.id}
                     </TableCell>
                     <TableCell className="table-body-cell" align="center">
-                        {row.task.subject.name}
+                        {userTask.task.subject.name}
                     </TableCell>
                     <TableCell className="table-body-cell" align="left">
-                        {getTitle(row.task.title)}
+                        {getTitle(userTask.task.title)}
                     </TableCell>
                     <TableCell className="table-body-cell" align="left">
-                        {row.task.subtitle}
+                        {userTask.task.subtitle}
                     </TableCell>
                     <TableCell className="table-body-cell" align="center">
-                        {new Date(row.task.deadline).toDateString()}
+                        {new Date(userTask.task.deadline).toDateString()}
                     </TableCell>
                     <TableCell className="table-body-cell" align="right">
-                        {getStatus(row.status)}
+                        {getStatus(userTask.status)}
                     </TableCell>
                 </TableRow>
                 <TableRow>
@@ -280,7 +280,7 @@ const Row = (props) => {
                                     gutterBottom
                                     component="div"
                                 >
-                                    {row.task.description}
+                                    {userTask.task.description}
                                 </Typography>
                             </Box>
                         </Collapse>

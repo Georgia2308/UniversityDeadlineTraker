@@ -1,0 +1,14 @@
+.subject-link {
+    font-size: 18px;
+    font-weight: 500;
+    margin: 10px 0 10px 5px;
+}
+.subject-link:hover {
+    font-size: 18px;
+    color: var(--PURPLE_ACCENT);
+    cursor: pointer;
+}
+.subject-year {
+    font-size: 12px;
+    font-weight: 100;
+}
