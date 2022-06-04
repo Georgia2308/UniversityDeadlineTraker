@@ -6,9 +6,9 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-import { getAccentColor, LIGHT_GREY } from "../Utils/Constants";
+import { LIGHT_GREY, RED_ACCENT, LIGHTER_GREY } from "../Utils/Constants";
 
-export default function AlertDialog(props) {
+export default function AlertDialogConfirm(props) {
     const handleClose = () => {
         props.setOpen(false);
     };
@@ -23,7 +23,7 @@ export default function AlertDialog(props) {
                         color: "white",
                     }}
                 >
-                    Operation completed.
+                    Are you sure you want to continue?
                 </DialogTitle>
                 <DialogContent
                     style={{
@@ -49,13 +49,22 @@ export default function AlertDialog(props) {
                 >
                     <Button
                         onClick={handleClose}
-                        autoFocus
                         style={{
                             "background-color": LIGHT_GREY,
-                            color: getAccentColor(),
+                            color: RED_ACCENT,
                         }}
                     >
-                        Close
+                        Continue
+                    </Button>
+
+                    <Button
+                        onClick={handleClose}
+                        style={{
+                            "background-color": LIGHT_GREY,
+                            color: LIGHTER_GREY,
+                        }}
+                    >
+                        Cancel
                     </Button>
                 </DialogActions>
             </Dialog>

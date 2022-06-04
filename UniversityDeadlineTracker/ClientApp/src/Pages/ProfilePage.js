@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./ProfilePage.css";
 import { Default } from "../Components/Default";
 import { getUser } from "../Utils/Token";
@@ -16,20 +16,22 @@ import StackedLineChartIcon from "@mui/icons-material/StackedLineChart";
 import BackupTableIcon from "@mui/icons-material/BackupTable";
 
 import Chart from "../Components/Chart";
+import AlertDialogError from "../Components/AlertDialogError";
 
 const ProfilePage = (props) => {
     const [isVisible, setIsVisible] = useState(true);
     const [user, setUser] = useState(getUser());
     const [userTasks, setUserTasks] = useState(null);
+    const [showError, setShowError] = useState(false);
+    const [subjects, setSubjects] = React.useState(null);
+    const [isNotChart, setIsNotChart] = useState(true);
+    const inputFile = useRef(null);
+
     const genericProps = {
         required: false,
         variant: "filled",
         className: "textfield",
     };
-
-    const [subjects, setSubjects] = React.useState(null);
-
-    const [isNotChart, setIsNotChart] = useState(true);
 
     React.useEffect(() => {
         if (!props.token) return;
@@ -47,6 +49,14 @@ const ProfilePage = (props) => {
             setUserTasks(groupedTasks);
         });
     }, [props.token]);
+
+    const onChangeFile = (event) => {
+        event.stopPropagation();
+        event.preventDefault();
+        const file = event.target.files[0];
+        const newUser = { ...user, profilePictureUrl: file.name };
+        setUser(newUser);
+    };
 
     const getSubjects = () => {
         return (
@@ -154,7 +164,10 @@ const ProfilePage = (props) => {
                         </div>
                     ) : (
                         <div className="left">
-                            <div className="avatar" onClick={() => true}>
+                            <div
+                                className="avatar"
+                                onClick={() => inputFile.current.click()}
+                            >
                                 <Avatar
                                     alt="User"
                                     className="profile-pic-edit"
@@ -169,6 +182,13 @@ const ProfilePage = (props) => {
                                 <div className="change">
                                     Change profile picture
                                 </div>
+                                <input
+                                    type="file"
+                                    id="file"
+                                    ref={inputFile}
+                                    style={{ display: "none" }}
+                                    onChange={onChangeFile.bind(this)}
+                                />
                             </div>
                             <Stack
                                 direction="column"
@@ -361,7 +381,7 @@ const ProfilePage = (props) => {
                                                     JSON.stringify(user)
                                                 );
                                                 setIsVisible(true);
-                                            } else alert(response);
+                                            } else setShowError(true);
                                         });
                                     }}
                                 >
@@ -437,6 +457,11 @@ const ProfilePage = (props) => {
                             </div>
                         )}
                     </div>
+                    <AlertDialogError
+                        open={showError}
+                        setOpen={setShowError}
+                        label="Please try again"
+                    />
                 </Stack>
             ) : (
                 <Default />

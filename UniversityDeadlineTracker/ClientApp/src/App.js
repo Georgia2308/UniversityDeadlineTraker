@@ -10,6 +10,7 @@ import BacklogPage from "./Pages/BacklogPage";
 import CommunityPage from "./Pages/CommunityPage";
 import ProfilePage from "./Pages/ProfilePage";
 import SettingsPage from "./Pages/SettingsPage";
+import ProfsPage from "./Pages/ProfsPage";
 
 export const App = () => {
     const { token, setToken } = useToken();
@@ -27,6 +28,9 @@ export const App = () => {
                     </Route>
                     <Route path={Pages.BACKLOG}>
                         <BacklogPage token={token} />
+                    </Route>
+                    <Route path={Pages.PROFS}>
+                        <ProfsPage token={token} />
                     </Route>
                     <Route path={Pages.COMMUNITY}>
                         <CommunityPage token={token} />

@@ -5,6 +5,7 @@
     COMMUNITY: "/community",
     PROFILE: "/profile",
     SETTINGS: "/settings",
+    PROFS: "/professors",
 };
 
 export const Status = {

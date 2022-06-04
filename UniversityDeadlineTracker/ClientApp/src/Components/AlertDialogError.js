@@ -8,7 +8,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 import { getAccentColor, LIGHT_GREY } from "../Utils/Constants";
 
-export default function AlertDialog(props) {
+export default function AlertDialogError(props) {
     const handleClose = () => {
         props.setOpen(false);
     };
@@ -23,7 +23,7 @@ export default function AlertDialog(props) {
                         color: "white",
                     }}
                 >
-                    Operation completed.
+                    Something went wrong
                 </DialogTitle>
                 <DialogContent
                     style={{

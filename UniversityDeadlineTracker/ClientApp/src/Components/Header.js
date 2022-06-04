@@ -8,7 +8,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import { AccountCircle, Logout, Settings, Login } from "@mui/icons-material";
 import { getUser } from "../Utils/Token";
-import { getAccentColor, ACCENT_COLOR } from "../Utils/Constants";
+import { getAccentColor } from "../Utils/Constants";
 
 export const Header = (props) => {
     let history = useHistory();
@@ -46,7 +46,7 @@ export const Header = (props) => {
                     >
                         <span
                             className="orange"
-                            style={{ color: ACCENT_COLOR }}
+                            style={{ color: getAccentColor() }}
                         >
                             ORGANISE
                         </span>
@@ -74,6 +74,18 @@ export const Header = (props) => {
                     }}
                 >
                     Backlog
+                </div>
+                <div
+                    className={
+                        location.pathname === Pages.PROFS
+                            ? "selected"
+                            : "link"
+                    }
+                    onClick={() => {
+                        history.push(Pages.PROFS);
+                    }}
+                >
+                    Professors
                 </div>
                 <div
                     className={
