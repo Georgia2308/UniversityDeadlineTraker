@@ -15,16 +15,18 @@ import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { LIGHTER_GREY, getAccentColor } from "../Utils/Constants";
 
 export const LoginPage = (props) => {
+    const { token, setToken } = props.token;
+    const { user, setUser } = props.user;
     let history = useHistory();
     const [subjects, setSubjects] = React.useState(null);
 
     React.useEffect(() => {
-        if (!props.token) return;
+        if (!token) return;
 
         getUnassignedSubjects().then((data) => {
             setSubjects(data);
         });
-    }, [props.token]);
+    }, [token]);
 
     const getSubjectButtons = () => {
         return (
@@ -76,11 +78,11 @@ export const LoginPage = (props) => {
 
     return (
         <React.Fragment>
-            {props.token ? (
+            {user ? (
                 <div className="login-page">
                     <p className="hello">
                         Hello{" "}
-                        <span className="orange">{getUser().username}</span>!
+                        <span className="orange">{user?.username}</span>!
                     </p>
                     <p>
                         Welcome back to your University Task Management System!
@@ -109,7 +111,7 @@ export const LoginPage = (props) => {
             ) : (
                 <React.Fragment>
                     <Default main />
-                    <Login token={props.token} setToken={props.setToken} />
+                    <Login token={token} setToken={setToken} user={user} setUser={setUser} />
                 </React.Fragment>
             )}
         </React.Fragment>

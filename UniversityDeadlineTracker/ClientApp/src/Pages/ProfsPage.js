@@ -26,6 +26,8 @@ import { LIGHTER_GREY, getAccentColor, LIGHT_GREY } from "../Utils/Constants";
 import { useHistory, useLocation } from "react-router-dom";
 
 const ProfsPage = (props) => {
+    const { token, setToken } = props.token;
+    const { user, setUser } = props.user;
     const [profs, setProfs] = useState([]);
     const [filteredProfs, setFilteredProfs] = useState([]);
     const [order, setOrder] = useState("asc");
@@ -35,13 +37,13 @@ const ProfsPage = (props) => {
     const [subjects, setSubjects] = React.useState(null);
 
     useEffect(() => {
-        if (!props.token) return;
+        if (!token) return;
 
         getAllProfs().then((data) => {
             setProfs(data);
             setFilteredProfs(data);
         });
-    }, [props.token]);
+    }, [token]);
 
     const onSearch = (event) => {
         setPage(0);
@@ -115,7 +117,7 @@ const ProfsPage = (props) => {
 
     return (
         <React.Fragment>
-            {props.token ? (
+            {token ? (
                 [
                     <div className="table-header">
                         <TextField

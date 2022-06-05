@@ -97,6 +97,23 @@
 .profile-page .left .stack {
     margin-top: 20px;
 }
+
+.profile-page
+    .left
+    .stack
+    .textfield
+    .css-cio0x1-MuiInputBase-root-MuiFilledInput-root:after {
+    border-bottom: 2px solid var(--PURPLE_ACCENT);
+}
+
+.profile-page
+    .left
+    .stack
+    .textfield
+    .css-cio0x1-MuiInputBase-root-MuiFilledInput-root.Mui-error:after {
+    border-bottom: 2px solid var(--RED_ACCENT);
+}
+
 /* RIGHT */
 .profile-page .right {
     position: relative;
@@ -115,7 +132,7 @@
     width: 36px;
     height: 36px;
 }
-.icon:hover{
+.icon:hover {
     color: white;
 }
 .profile-page .right .title {

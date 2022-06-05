@@ -11,7 +11,7 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import { updateUser, deleteUser } from "../Utils/Services";
 import { Stack, TextField } from "@mui/material";
-import { LIGHTER_GREY, LIGHT_GREY, DARK_GREY } from "../Utils/Constants";
+import { LIGHTER_GREY, LIGHT_GREY, DARK_GREY, ACCENT_COLOR } from "../Utils/Constants";
 import AlertDialog from "../Components/AlertDialog";
 import AlertDialogError from "../Components/AlertDialogError";
 import { getAccentColor } from "../Utils/Constants";
@@ -30,8 +30,47 @@ import AlertDialogConfirm from "../Components/AlertDialogConfirm";
 import { useHistory, useLocation } from "react-router-dom";
 import { Pages } from "../Utils/Enums";
 
+const isUserValid = (user) => {
+    return (
+        user.username?.length > 0 &&
+        user.password?.length > 0 &&
+        user.firstName?.length > 0 &&
+        user.lastName?.length > 0 &&
+        user.email?.length > 0 &&
+        user.group?.length > 0 &&
+        user.year?.length > 0 &&
+        user.code?.length > 0 &&
+        user.profilePictureURL?.length > 0 &&
+        user.dateOfBirth?.length > 0 &&
+        !isNaN(user?.group) &&
+        !isNaN(user?.year) &&
+        !isNaN(user?.code)
+    );
+};
+const genericProps = {
+    required: false,
+    variant: "filled",
+    className: "textfield",
+    sx: {
+        input: {
+            color: "white",
+        },
+    },
+    InputLabelProps: {
+        style: {
+            color: LIGHTER_GREY,
+        },
+    },
+};
+
+const genericTextProps = { ...genericProps, type: "text" };
+
+const genericPasswordProps = { ...genericProps, type: "password" };
+
 const SettingsPage = (props) => {
-    const [user, setUser] = useState(getUser());
+    const { token, setToken } = props.token;
+    const { user, setUser } = props.user;
+    const [newUser, setNewUser] = useState(user);
     const [checked, setChecked] = React.useState([true, false]);
     const [color, setColor] = useState(getAccentColor());
 
@@ -49,19 +88,32 @@ const SettingsPage = (props) => {
     let history = useHistory();
 
     const onConfirmDelete = () => {
-        deleteUser(user).then((response) => {
+        deleteUser(newUser.id).then((response) => {
             if (response.status === 200) {
                 props.setToken(null, null);
+                props.setUser(null);
                 history.push(Pages.HOME);
             } else setShowError(true);
         });
     };
 
-    const genericProps = {
-        required: false,
-        variant: "filled",
-        className: "textfield",
+    const saveProfileSettings = () => {
+        if (isUserValid(newUser)) {
+            const saveData = {
+                ...newUser,
+                group: Number.parseInt(newUser.group),
+                year: Number.parseInt(newUser.year),
+                code: Number.parseInt(newUser.code),
+            };
+            updateUser(saveData).then((response) => {
+                if (response.status === 200) {
+                    setUser(saveData);
+                    setShowConfirmProfile(true);
+                } else setShowError(true);
+            });
+        } else setShowError(true);
     };
+
     const getTabStyle = (tab) => {
         return {
             backgroundColor: currentTab == tab ? LIGHT_GREY : DARK_GREY,
@@ -72,8 +124,7 @@ const SettingsPage = (props) => {
         event.stopPropagation();
         event.preventDefault();
         const file = event.target.files[0];
-        const newUser = { ...user, profilePictureUrl: file.name };
-        setUser(newUser);
+        setNewUser({ ...newUser, profilePictureURL: file.name });
     };
     const handleChange1 = (event) => {
         setChecked([event.target.checked, event.target.checked]);
@@ -159,17 +210,17 @@ const SettingsPage = (props) => {
                         alt="User"
                         className="profile-pic"
                         src={
-                            props.token && getUser()?.profilePictureURL
-                                ? "/" + getUser()?.profilePictureURL
+                            user?.profilePictureURL
+                                ? "/" + user?.profilePictureURL
                                 : "https://www.pngkey.com/png/full/230-2301779_best-classified-apps-default-user-profile.png"
                         }
                         sx={{ width: 60, height: 60 }}
                     />
                     <div className="names">
                         <div className="name">
-                            {getUser()?.firstName} {getUser()?.lastName}
+                            {user?.firstName} {user?.lastName}
                         </div>
-                        <div className="usrname">@{getUser()?.username}</div>
+                        <div className="usrname">@{user?.username}</div>
                     </div>
                 </div>
                 <div className="hor-line"></div>
@@ -221,176 +272,101 @@ const SettingsPage = (props) => {
                                 className="stack"
                             >
                                 <TextField
-                                    sx={{
-                                        input: {
-                                            color: "white",
-                                        },
-                                    }}
                                     label="First Name"
-                                    InputProps={{ disableUnderline: true }}
-                                    InputLabelProps={{
-                                        style: {
-                                            color: LIGHTER_GREY,
-                                        },
-                                    }}
-                                    type="text"
-                                    defaultValue={getUser()?.firstName}
+                                    error={newUser.firstName === ""}
+                                    defaultValue={user.firstName}
                                     autofocus
-                                    {...genericProps}
+                                    {...genericTextProps}
                                     onChange={(event) => {
-                                        setUser({
-                                            ...user,
+                                        setNewUser({
+                                            ...newUser,
                                             firstName: event.target.value,
                                         });
                                     }}
                                 />
                                 <TextField
-                                    sx={{
-                                        input: {
-                                            color: "white",
-                                        },
-                                    }}
                                     label="Last Name"
-                                    InputProps={{ disableUnderline: true }}
-                                    InputLabelProps={{
-                                        style: {
-                                            color: LIGHTER_GREY,
-                                        },
-                                    }}
-                                    type="text"
-                                    defaultValue={getUser()?.lastName}
-                                    autofocus
-                                    {...genericProps}
+                                    error={newUser.lastName === ""}
+                                    defaultValue={user.lastName}
+                                    {...genericTextProps}
                                     onChange={(event) => {
-                                        setUser({
-                                            ...user,
+                                        setNewUser({
+                                            ...newUser,
                                             lastName: event.target.value,
                                         });
                                     }}
                                 />
                                 <TextField
-                                    sx={{
-                                        input: {
-                                            color: "white",
-                                        },
-                                    }}
                                     label="Username"
-                                    InputProps={{ disableUnderline: true }}
-                                    InputLabelProps={{
-                                        style: {
-                                            color: LIGHTER_GREY,
-                                        },
-                                    }}
-                                    type="text"
-                                    defaultValue={getUser()?.username}
-                                    autofocus
-                                    {...genericProps}
+                                    error={newUser.username === ""}
+                                    defaultValue={user.username}
+                                    {...genericTextProps}
                                     onChange={(event) => {
-                                        setUser({
-                                            ...user,
+                                        setNewUser({
+                                            ...newUser,
                                             username: event.target.value,
                                         });
                                     }}
                                 />
                                 <TextField
-                                    sx={{
-                                        input: {
-                                            color: "white",
-                                        },
-                                    }}
                                     label="Email"
-                                    InputProps={{ disableUnderline: true }}
+                                    error={newUser.email === ""}
                                     InputLabelProps={{
                                         style: {
                                             color: LIGHTER_GREY,
                                         },
                                     }}
-                                    type="text"
-                                    defaultValue={getUser()?.email}
-                                    autofocus
-                                    {...genericProps}
+                                    defaultValue={user.email}
+                                    {...genericTextProps}
                                     onChange={(event) => {
-                                        setUser({
-                                            ...user,
+                                        setNewUser({
+                                            ...newUser,
                                             email: event.target.value,
                                         });
                                     }}
                                 />
                                 <TextField
-                                    sx={{
-                                        input: {
-                                            color: "white",
-                                        },
-                                    }}
                                     label="Code"
-                                    InputProps={{ disableUnderline: true }}
-                                    InputLabelProps={{
-                                        style: {
-                                            color: LIGHTER_GREY,
-                                        },
-                                    }}
-                                    type="text"
-                                    defaultValue={getUser()?.code}
-                                    autofocus
-                                    {...genericProps}
+                                    error={
+                                        newUser.code === "" ||
+                                        isNaN(newUser.code)
+                                    }
+                                    defaultValue={user.code}
+                                    {...genericTextProps}
                                     onChange={(event) => {
-                                        setUser({
-                                            ...user,
-                                            code: Number.parseInt(
-                                                event.target.value
-                                            ),
+                                        setNewUser({
+                                            ...newUser,
+                                            code: event.target.value,
                                         });
                                     }}
                                 />
                                 <TextField
-                                    sx={{
-                                        input: {
-                                            color: "white",
-                                        },
-                                    }}
                                     label="Group"
-                                    InputProps={{ disableUnderline: true }}
-                                    InputLabelProps={{
-                                        style: {
-                                            color: LIGHTER_GREY,
-                                        },
-                                    }}
-                                    type="text"
-                                    defaultValue={getUser()?.group}
-                                    autofocus
-                                    {...genericProps}
+                                    error={
+                                        newUser.group === "" ||
+                                        isNaN(newUser.group)
+                                    }
+                                    defaultValue={user.group}
+                                    {...genericTextProps}
                                     onChange={(event) => {
-                                        setUser({
-                                            ...user,
-                                            group: Number.parseInt(
-                                                event.target.value
-                                            ),
+                                        setNewUser({
+                                            ...newUser,
+                                            group: event.target.value,
                                         });
                                     }}
                                 />
                                 <TextField
-                                    sx={{
-                                        input: {
-                                            color: "white",
-                                        },
-                                    }}
                                     label="Year"
-                                    InputProps={{ disableUnderline: true }}
-                                    InputLabelProps={{
-                                        style: {
-                                            color: LIGHTER_GREY,
-                                        },
-                                    }}
-                                    type="text"
-                                    defaultValue={getUser()?.year}
-                                    autofocus
-                                    {...genericProps}
+                                    error={
+                                        newUser.year === "" ||
+                                        isNaN(newUser.year)
+                                    }
+                                    defaultValue={user.year}
+                                    {...genericTextProps}
                                     onChange={(event) => {
-                                        setUser({
-                                            ...user,
-                                            year: Number.parseInt(
-                                                event.target.value
-                                            ),
+                                        setNewUser({
+                                            ...newUser,
+                                            year: event.target.value,
                                         });
                                     }}
                                 />
@@ -407,10 +383,9 @@ const SettingsPage = (props) => {
                                         alt="User"
                                         className="profile-pic-edit"
                                         src={
-                                            props.token &&
-                                            getUser()?.profilePictureURL
+                                            newUser.profilePictureURL
                                                 ? "/" +
-                                                  getUser()?.profilePictureURL
+                                                  newUser?.profilePictureURL
                                                 : "https://www.pngkey.com/png/full/230-2301779_best-classified-apps-default-user-profile.png"
                                         }
                                         sx={{ width: 150, height: 150 }}
@@ -430,20 +405,7 @@ const SettingsPage = (props) => {
                                 </div>
                             </Stack>
                         </div>
-                        <div
-                            className="button"
-                            onClick={() => {
-                                updateUser(user).then((response) => {
-                                    if (response.status === 200) {
-                                        sessionStorage.setItem(
-                                            "user",
-                                            JSON.stringify(user)
-                                        );
-                                        setShowConfirmProfile(true);
-                                    } else setShowError(true);
-                                });
-                            }}
-                        >
+                        <div className="button" onClick={saveProfileSettings}>
                             Save changes
                         </div>
                     </div>
@@ -454,21 +416,9 @@ const SettingsPage = (props) => {
                         <div className="hor-line"></div>
                         <Stack direction="column" spacing={1} className="stack">
                             <TextField
-                                sx={{
-                                    input: {
-                                        color: "white",
-                                    },
-                                }}
                                 label="Old Password"
-                                InputProps={{ disableUnderline: true }}
-                                InputLabelProps={{
-                                    style: {
-                                        color: LIGHTER_GREY,
-                                    },
-                                }}
                                 type="password"
-                                autofocus
-                                {...genericProps}
+                                {...genericPasswordProps}
                                 // onChange={(event) => {
                                 //     setUser({
                                 //         ...user,
@@ -477,21 +427,9 @@ const SettingsPage = (props) => {
                                 // }}
                             />
                             <TextField
-                                sx={{
-                                    input: {
-                                        color: "white",
-                                    },
-                                }}
                                 label="New Password"
-                                InputProps={{ disableUnderline: true }}
-                                InputLabelProps={{
-                                    style: {
-                                        color: LIGHTER_GREY,
-                                    },
-                                }}
                                 type="password"
-                                autofocus
-                                {...genericProps}
+                                {...genericPasswordProps}
                                 // onChange={(event) => {
                                 //     setUser({
                                 //         ...user,
@@ -500,21 +438,9 @@ const SettingsPage = (props) => {
                                 // }}
                             />
                             <TextField
-                                sx={{
-                                    input: {
-                                        color: "white",
-                                    },
-                                }}
                                 label="Confirm New Password"
-                                InputProps={{ disableUnderline: true }}
-                                InputLabelProps={{
-                                    style: {
-                                        color: LIGHTER_GREY,
-                                    },
-                                }}
                                 type="password"
-                                autofocus
-                                {...genericProps}
+                                {...genericPasswordProps}
                                 // onChange={(event) => {
                                 //     setUser({
                                 //         ...user,
@@ -661,8 +587,8 @@ const SettingsPage = (props) => {
                                 color={color}
                                 onChange={(newColor) => {
                                     setColor(newColor);
-                                    setUser({
-                                        ...user,
+                                    setNewUser({
+                                        ...newUser,
                                         accentColor: newColor,
                                     });
                                 }}
@@ -671,17 +597,15 @@ const SettingsPage = (props) => {
                                 className="button-reset"
                                 onClick={() => {
                                     const resetUser = {
-                                        ...user,
+                                        ...newUser,
                                         accentColor: null,
                                     };
-                                    setUser(resetUser);
+                                    setNewUser(resetUser);
                                     updateUser(resetUser).then((response) => {
                                         if (response.status === 200) {
-                                            sessionStorage.setItem(
-                                                "user",
-                                                JSON.stringify(resetUser)
-                                            );
+                                            setUser(resetUser);
                                             setShowConfirmReset(true);
+                                            setColor(ACCENT_COLOR);
                                         } else setShowError(true);
                                     });
                                 }}
@@ -706,12 +630,9 @@ const SettingsPage = (props) => {
                         <div
                             className="button-accent"
                             onClick={() => {
-                                updateUser(user).then((response) => {
+                                updateUser(newUser).then((response) => {
                                     if (response.status === 200) {
-                                        sessionStorage.setItem(
-                                            "user",
-                                            JSON.stringify(user)
-                                        );
+                                        setUser(newUser);
                                         setShowConfirmAccent(true);
                                     } else setShowError(true);
                                 });

@@ -11,3 +11,14 @@ export const RED_ACCENT = "#EA2A3D";
 export const getAccentColor = () => {
     return getUser()?.accentColor ?? ACCENT_COLOR;
 };
+
+export const setAccentColor = () => {
+    document.documentElement.style.setProperty(
+        "--PURPLE_ACCENT",
+        getUser()?.accentColor ? getUser().accentColor : ACCENT_COLOR
+    );
+    // document.documentElement.style.setProperty(
+    //     "--DARKEST_GREY",
+    //     getUser()?.darkMode ? DARKEST_GREY : "white"
+    // );
+}

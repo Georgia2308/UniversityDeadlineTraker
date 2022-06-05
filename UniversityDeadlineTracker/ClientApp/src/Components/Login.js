@@ -1,8 +1,9 @@
-﻿import React, {useRef, useState} from "react";
+﻿import React, { useRef, useState } from "react";
 import "./Login.css";
-import {addUser, login} from "../Utils/Services";
+import { addUser, login } from "../Utils/Services";
 import {
-    Button, CircularProgress,
+    Button,
+    CircularProgress,
     Dialog,
     DialogActions,
     DialogContent,
@@ -15,25 +16,26 @@ import {
     Stack,
     TextField,
 } from "@mui/material";
-import {AccountCircle, Visibility, VisibilityOff} from "@mui/icons-material";
+import { AccountCircle, Visibility, VisibilityOff } from "@mui/icons-material";
 
 const getGenericUser = () => {
     return {
-        username: '',
-        password: '',
-        firstName: '',
-        lastName: '',
-        email: '',
-        group: '',
-        year: '',
-        code: '',
-        profilePictureUrl: '',
-        dateOfBirth: ''
-    }
-}
+        username: "",
+        password: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        group: "",
+        year: "",
+        code: "",
+        profilePictureUrl: "",
+        dateOfBirth: "",
+    };
+};
 
 const isUserValid = (user) => {
-    return user.username.length > 0 &&
+    return (
+        user.username.length > 0 &&
         user.password.length > 0 &&
         user.firstName.length > 0 &&
         user.lastName.length > 0 &&
@@ -46,7 +48,8 @@ const isUserValid = (user) => {
         !isNaN(user.group) &&
         !isNaN(user.year) &&
         !isNaN(user.code)
-}
+    );
+};
 
 export const Login = (props) => {
     const [user, setUser] = useState(getGenericUser);
@@ -60,13 +63,14 @@ export const Login = (props) => {
     const onLogin = () => {
         login(user.username, user.password).then((data) => {
             if (data) {
-                props.setToken(data.accessToken, data.refreshToken, data.user);
+                props.setToken(data.accessToken, data.refreshToken);
+                props.setUser(data.user);
             } else setLoginError(true);
         });
     };
 
     const onSignup = () => {
-        setIsSigningUp(true)
+        setIsSigningUp(true);
         addUser({
             ...user,
             group: Number.parseInt(user.group),
@@ -78,10 +82,14 @@ export const Login = (props) => {
             if (response.status === 200) onLogin();
             else setSignupError(true);
         });
-    }
+    };
 
     const getSignupFields = () => {
-        const genericProps = {required: true, variant: 'standard', className: 'textfield'}
+        const genericProps = {
+            required: true,
+            variant: "standard",
+            className: "textfield",
+        };
         return (
             <div>
                 <Stack direction="row" spacing={10}>
@@ -91,7 +99,7 @@ export const Login = (props) => {
                         autofocus
                         {...genericProps}
                         onChange={(event) => {
-                            setUser({...user, username: event.target.value,});
+                            setUser({ ...user, username: event.target.value });
                         }}
                     />
                     <TextField
@@ -99,7 +107,7 @@ export const Login = (props) => {
                         type="password"
                         {...genericProps}
                         onChange={(event) => {
-                            setUser({...user, password: event.target.value,});
+                            setUser({ ...user, password: event.target.value });
                         }}
                     />
                 </Stack>
@@ -109,7 +117,7 @@ export const Login = (props) => {
                         type="text"
                         {...genericProps}
                         onChange={(event) => {
-                            setUser({...user, firstName: event.target.value,});
+                            setUser({ ...user, firstName: event.target.value });
                         }}
                     />
                     <TextField
@@ -117,7 +125,7 @@ export const Login = (props) => {
                         type="text"
                         {...genericProps}
                         onChange={(event) => {
-                            setUser({...user, lastName: event.target.value,});
+                            setUser({ ...user, lastName: event.target.value });
                         }}
                     />
                 </Stack>
@@ -127,7 +135,7 @@ export const Login = (props) => {
                         type="email"
                         {...genericProps}
                         onChange={(event) => {
-                            setUser({...user, email: event.target.value,});
+                            setUser({ ...user, email: event.target.value });
                         }}
                     />
                     <TextField
@@ -137,7 +145,7 @@ export const Login = (props) => {
                         helperText="Please enter a number."
                         {...genericProps}
                         onChange={(event) => {
-                            setUser({...user, group: event.target.value,});
+                            setUser({ ...user, group: event.target.value });
                         }}
                     />
                 </Stack>
@@ -149,7 +157,7 @@ export const Login = (props) => {
                         helperText="Please enter a number."
                         {...genericProps}
                         onChange={(event) => {
-                            setUser({...user, year: event.target.value,});
+                            setUser({ ...user, year: event.target.value });
                         }}
                     />
                     <TextField
@@ -159,7 +167,7 @@ export const Login = (props) => {
                         helperText="Please enter a number."
                         {...genericProps}
                         onChange={(event) => {
-                            setUser({...user, code: event.target.value,});
+                            setUser({ ...user, code: event.target.value });
                         }}
                     />
                 </Stack>
@@ -175,28 +183,31 @@ export const Login = (props) => {
                         type="file"
                         id="file"
                         ref={inputFile}
-                        style={{display: "none"}}
+                        style={{ display: "none" }}
                         onChange={onChangeFile.bind(this)}
                     />
                     <TextField
                         label="Birthday"
                         type="date"
                         {...genericProps}
-                        InputLabelProps={{shrink: true,}}
+                        InputLabelProps={{ shrink: true }}
                         onChange={(event) => {
-                            setUser({...user, dateOfBirth: event.target.value,});
+                            setUser({
+                                ...user,
+                                dateOfBirth: event.target.value,
+                            });
                         }}
                     />
                 </Stack>
             </div>
-        )
-    }
+        );
+    };
 
     const onChangeFile = (event) => {
         event.stopPropagation();
         event.preventDefault();
         const file = event.target.files[0];
-        setUser({...user, profilePictureUrl: file.name});
+        setUser({ ...user, profilePictureUrl: file.name });
     };
 
     return (
@@ -204,15 +215,16 @@ export const Login = (props) => {
             <form className="form">
                 <FormControl variant="standard" className="input">
                     <InputLabel>Username</InputLabel>
-                    <Input type="text"
-                           endAdornment={
-                               <InputAdornment position="end">
-                                   <AccountCircle/>
-                               </InputAdornment>
-                           }
-                           onChange={(event) => {
-                               setUser({...user, username: event.target.value});
-                           }}
+                    <Input
+                        type="text"
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <AccountCircle />
+                            </InputAdornment>
+                        }
+                        onChange={(event) => {
+                            setUser({ ...user, username: event.target.value });
+                        }}
                     />
                 </FormControl>
                 <FormControl variant="standard" className="input">
@@ -222,20 +234,29 @@ export const Login = (props) => {
                         endAdornment={
                             <InputAdornment
                                 position="end"
-                                style={{cursor: "pointer"}}>
-                                {showPassword ?
-                                    <VisibilityOff onClick={() =>
-                                        showPassword ? setShowPassword(false) : setShowPassword(true)
-                                    }/>
-                                    :
-                                    <Visibility onClick={() =>
-                                        showPassword ? setShowPassword(false) : setShowPassword(true)
-                                    }/>
-                                }
+                                style={{ cursor: "pointer" }}
+                            >
+                                {showPassword ? (
+                                    <VisibilityOff
+                                        onClick={() =>
+                                            showPassword
+                                                ? setShowPassword(false)
+                                                : setShowPassword(true)
+                                        }
+                                    />
+                                ) : (
+                                    <Visibility
+                                        onClick={() =>
+                                            showPassword
+                                                ? setShowPassword(false)
+                                                : setShowPassword(true)
+                                        }
+                                    />
+                                )}
                             </InputAdornment>
                         }
                         onChange={(event) => {
-                            setUser({...user, password: event.target.value});
+                            setUser({ ...user, password: event.target.value });
                         }}
                     />
                 </FormControl>
@@ -243,47 +264,63 @@ export const Login = (props) => {
                     <span>Invalid username or password. Please try again!</span>
                 )}
                 <Stack direction="row">
-                    <Button type="button"
-                            color="inherit"
-                            className="button"
-                            onClick={onLogin}>
+                    <Button
+                        type="button"
+                        color="inherit"
+                        className="button"
+                        onClick={onLogin}
+                    >
                         Login
                     </Button>
-                    <Button type="button"
-                            color="inherit"
-                            className="button"
-                            onClick={() => {
-                                setShouldSignUp(true);
-                            }}>
+                    <Button
+                        type="button"
+                        color="inherit"
+                        className="button"
+                        onClick={() => {
+                            setShouldSignUp(true);
+                        }}
+                    >
                         Sign up
                     </Button>
                 </Stack>
 
-
-                <Dialog open={shouldSignUp}
-                        onClose={() => {
-                            setShouldSignUp(false);
-                        }}>
-                    <Dialog className="login-component-spinner-dialog" open={isSigningUp} color="error">
-                        <CircularProgress color="warning"/>
+                <Dialog
+                    open={shouldSignUp}
+                    onClose={() => {
+                        setShouldSignUp(false);
+                    }}
+                >
+                    <Dialog
+                        className="login-component-spinner-dialog"
+                        open={isSigningUp}
+                        color="error"
+                    >
+                        <CircularProgress color="warning" />
                     </Dialog>
                     <DialogTitle>Create Account</DialogTitle>
                     <DialogContent>
                         <DialogContentText>
                             Please fill in your personal information.
                         </DialogContentText>
-                        {signupError && <DialogContentText color='error'>
-                            Something went wrong. Please try again!
-                        </DialogContentText>}
+                        {signupError && (
+                            <DialogContentText color="error">
+                                Something went wrong. Please try again!
+                            </DialogContentText>
+                        )}
                         {getSignupFields()}
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={() => {
-                            setShouldSignUp(false);
-                        }}>
+                        <Button
+                            onClick={() => {
+                                setShouldSignUp(false);
+                            }}
+                        >
                             Cancel
                         </Button>
-                        <Button onClick={onSignup} disabled={!isUserValid(user)}>
+                        <Button
+                            onClick={onSignup}
+                            disabled={!isUserValid(user)}
+                        >
                             Sign Up
                         </Button>
                     </DialogActions>

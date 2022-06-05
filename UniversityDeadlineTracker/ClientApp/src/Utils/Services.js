@@ -1,5 +1,4 @@
-﻿import { User } from "oidc-client";
-import { getToken, getUser } from "./Token";
+﻿import { getToken, getUser } from "./Token";
 
 // user
 
@@ -39,7 +38,7 @@ export const updateUser = (user) => {
     return fetch(`api/users/${user.id}`, requestOptions);
 };
 
-export const deleteUser = (user) => {
+export const deleteUser = (id) => {
     const requestOptions = {
         method: "DELETE",
         headers: {
@@ -47,7 +46,7 @@ export const deleteUser = (user) => {
             Authorization: "Bearer " + getToken(),
         },
     };
-    return fetch(`api/users/${user.id}`, requestOptions);
+    return fetch(`api/users/${id}`, requestOptions);
 };
 
 export const getAllProfs = () => {

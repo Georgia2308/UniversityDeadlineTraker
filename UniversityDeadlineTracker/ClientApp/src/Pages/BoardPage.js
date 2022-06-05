@@ -6,11 +6,13 @@ import SimpleSlider from "../Components/Slider";
 import { Default } from "../Components/Default";
 
 export const BoardPage = (props) => {
+    const { token, setToken } = props.token;
+    const { user, setUser } = props.user;
     const [tasks, setTasks] = useState(null);
     const [initialSlide, setInitialSlide] = useState(null);
 
     useEffect(() => {
-        if (!props.token) return;
+        if (!token) return;
 
         getUserTasksForUser().then((data) => {
             let groupedTasks = data.reduce(function (r, a) {
@@ -28,7 +30,7 @@ export const BoardPage = (props) => {
                 })
             );
         });
-    }, [props.token]);
+    }, [token]);
 
     useEffect(() => {
         if (!tasks) return;
@@ -44,7 +46,7 @@ export const BoardPage = (props) => {
 
     return (
         <React.Fragment>
-            {props.token ? (
+            {token ? (
                 initialSlide !== null ? (
                     <div className="board-page">
                         <SimpleSlider

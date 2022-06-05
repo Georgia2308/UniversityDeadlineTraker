@@ -11,6 +11,8 @@ import { getUser } from "../Utils/Token";
 import { getAccentColor } from "../Utils/Constants";
 
 export const Header = (props) => {
+    const { token, setToken } = props.token;
+    const { user, setUser } = props.user;
     let history = useHistory();
     const location = useLocation();
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -25,7 +27,8 @@ export const Header = (props) => {
     };
 
     const onLogout = () => {
-        props.setToken(null, null);
+        setToken(null, null);
+        setUser(null);
         handleClose();
         history.push(Pages.HOME);
     };
@@ -77,9 +80,7 @@ export const Header = (props) => {
                 </div>
                 <div
                     className={
-                        location.pathname === Pages.PROFS
-                            ? "selected"
-                            : "link"
+                        location.pathname === Pages.PROFS ? "selected" : "link"
                     }
                     onClick={() => {
                         history.push(Pages.PROFS);
@@ -106,8 +107,8 @@ export const Header = (props) => {
                     <Avatar
                         alt="User"
                         src={
-                            props.token && getUser().profilePictureURL
-                                ? "/" + getUser().profilePictureURL
+                            user && user.profilePictureURL
+                                ? "/" + user.profilePictureURL
                                 : "https://www.pngkey.com/png/full/230-2301779_best-classified-apps-default-user-profile.png"
                         }
                         sx={{ width: 30, height: 30 }}
@@ -126,11 +127,11 @@ export const Header = (props) => {
                 anchorOrigin={{ vertical: "center", horizontal: "right" }}
                 transformOrigin={{ vertical: "top", horizontal: "center" }}
             >
-                {props.token ? (
+                {user? (
                     [
                         <MenuItem className="dropdown-logged-user">
                             <p>Logged in as</p>
-                            <p className="name">{getUser().username}</p>
+                            <p className="name">{user?.username}</p>
                         </MenuItem>,
                         <Divider />,
                         <MenuItem

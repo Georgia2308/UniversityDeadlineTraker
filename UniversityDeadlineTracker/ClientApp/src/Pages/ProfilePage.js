@@ -18,23 +18,71 @@ import BackupTableIcon from "@mui/icons-material/BackupTable";
 import Chart from "../Components/Chart";
 import AlertDialogError from "../Components/AlertDialogError";
 
+const isUserValid = (user) => {
+    return (
+        user.username?.length > 0 &&
+        user.password?.length > 0 &&
+        user.firstName?.length > 0 &&
+        user.lastName?.length > 0 &&
+        user.email?.length > 0 &&
+        user.group?.length > 0 &&
+        user.year?.length > 0 &&
+        user.code?.length > 0 &&
+        user.profilePictureURL?.length > 0 &&
+        user.dateOfBirth?.length > 0 &&
+        !isNaN(user?.group) &&
+        !isNaN(user?.year) &&
+        !isNaN(user?.code)
+    );
+};
+
+const genericProps = {
+    required: false,
+    variant: "filled",
+    className: "textfield",
+    sx: {
+        input: {
+            color: "white",
+        },
+    },
+    InputLabelProps: {
+        style: {
+            color: LIGHTER_GREY,
+        },
+    },
+    type: "text",
+};
+
 const ProfilePage = (props) => {
+    const { token, setToken } = props.token;
+    const { user, setUser } = props.user;
     const [isVisible, setIsVisible] = useState(true);
-    const [user, setUser] = useState(getUser());
+    const [newUser, setNewUser] = useState(user);
     const [userTasks, setUserTasks] = useState(null);
     const [showError, setShowError] = useState(false);
     const [subjects, setSubjects] = React.useState(null);
     const [isNotChart, setIsNotChart] = useState(true);
     const inputFile = useRef(null);
 
-    const genericProps = {
-        required: false,
-        variant: "filled",
-        className: "textfield",
+    const onSaveProfile = () => {
+        if (isUserValid(newUser)) {
+            const saveData = {
+                ...newUser,
+                group: Number.parseInt(newUser.group),
+                year: Number.parseInt(newUser.year),
+                code: Number.parseInt(newUser.code),
+            };
+            updateUser(saveData).then((response) => {
+                if (response.status === 200) {
+                    setUser(saveData);
+                    setIsVisible(true);
+                } else setShowError(true);
+            });
+        } else setShowError(true);
     };
 
     React.useEffect(() => {
-        if (!props.token) return;
+        if (!token) return;
 
         getAssignedSubjects().then((data) => {
             setSubjects(data);
@@ -48,14 +96,13 @@ const ProfilePage = (props) => {
             }, Object.create(null));
             setUserTasks(groupedTasks);
         });
-    }, [props.token]);
+    }, [token]);
 
     const onChangeFile = (event) => {
         event.stopPropagation();
         event.preventDefault();
         const file = event.target.files[0];
-        const newUser = { ...user, profilePictureUrl: file.name };
-        setUser(newUser);
+        setNewUser({ ...newUser, profilePictureURL: file.name });
     };
 
     const getSubjects = () => {
@@ -107,7 +154,7 @@ const ProfilePage = (props) => {
 
     return (
         <React.Fragment>
-            {props.token ? (
+            {token ? (
                 <Stack direction="row" className="profile-page">
                     {isVisible ? (
                         <div className="left">
@@ -115,42 +162,38 @@ const ProfilePage = (props) => {
                                 alt="User"
                                 className="profile-pic"
                                 src={
-                                    props.token && getUser().profilePictureURL
-                                        ? "/" + getUser().profilePictureURL
+                                    user && user.profilePictureURL
+                                        ? "/" + user.profilePictureURL
                                         : "https://www.pngkey.com/png/full/230-2301779_best-classified-apps-default-user-profile.png"
                                 }
                                 sx={{ width: 150, height: 150 }}
                             />
                             <span className="infos">
                                 <div className="name">
-                                    {getUser().firstName} {getUser().lastName}
+                                    {user.firstName} {user.lastName}
                                 </div>
-                                <div className="usrname">
-                                    @{getUser().username}
-                                </div>
+                                <div className="usrname">@{user.username}</div>
                                 <div className="hor-line"></div>
                                 <div className="info">
                                     <MailOutlineIcon htmlColor="#c9c9c9" />
-                                    <div className="text">
-                                        {getUser().email}
-                                    </div>
+                                    <div className="text">{user.email}</div>
                                 </div>
                                 <div className="info">
                                     <CakeIcon htmlColor="#c9c9c9" />
                                     <div className="text">
                                         {new Date(
-                                            getUser().dateOfBirth
+                                            user.dateOfBirth
                                         ).toDateString()}
                                     </div>
                                 </div>
                                 <div className="info">
-                                    <span>Code</span>: {getUser().code}
+                                    <span>Code</span>: {user.code}
                                 </div>
                                 <div className="info">
-                                    <span>Group</span>: {getUser().group}
+                                    <span>Group</span>: {user.group}
                                 </div>
                                 <div className="info">
-                                    <span>Year</span>: {getUser().year}
+                                    <span>Year</span>: {user.year}
                                 </div>
                                 <div
                                     className="button"
@@ -172,9 +215,8 @@ const ProfilePage = (props) => {
                                     alt="User"
                                     className="profile-pic-edit"
                                     src={
-                                        props.token &&
-                                        getUser().profilePictureURL
-                                            ? "/" + getUser().profilePictureURL
+                                        newUser && newUser.profilePictureURL
+                                            ? "/" + newUser.profilePictureURL
                                             : "https://www.pngkey.com/png/full/230-2301779_best-classified-apps-default-user-profile.png"
                                     }
                                     sx={{ width: 150, height: 150 }}
@@ -196,195 +238,107 @@ const ProfilePage = (props) => {
                                 className="stack"
                             >
                                 <TextField
-                                    sx={{
-                                        input: {
-                                            color: "white",
-                                        },
-                                    }}
                                     label="First Name"
-                                    InputProps={{ disableUnderline: true }}
-                                    InputLabelProps={{
-                                        style: {
-                                            color: LIGHTER_GREY,
-                                        },
-                                    }}
-                                    type="text"
-                                    defaultValue={getUser().firstName}
+                                    error={newUser.firstName === ""}
+                                    defaultValue={user.firstName}
                                     autofocus
                                     {...genericProps}
                                     onChange={(event) => {
-                                        setUser({
-                                            ...user,
+                                        setNewUser({
+                                            ...newUser,
                                             firstName: event.target.value,
                                         });
                                     }}
                                 />
                                 <TextField
-                                    sx={{
-                                        input: {
-                                            color: "white",
-                                        },
-                                    }}
                                     label="Last Name"
-                                    InputProps={{ disableUnderline: true }}
-                                    InputLabelProps={{
-                                        style: {
-                                            color: LIGHTER_GREY,
-                                        },
-                                    }}
-                                    type="text"
-                                    defaultValue={getUser().lastName}
-                                    autofocus
+                                    error={newUser.lastName === ""}
+                                    defaultValue={user.lastName}
                                     {...genericProps}
                                     onChange={(event) => {
-                                        setUser({
-                                            ...user,
+                                        setNewUser({
+                                            ...newUser,
                                             lastName: event.target.value,
                                         });
                                     }}
                                 />
                                 <TextField
-                                    sx={{
-                                        input: {
-                                            color: "white",
-                                        },
-                                    }}
                                     label="Username"
-                                    InputProps={{ disableUnderline: true }}
-                                    InputLabelProps={{
-                                        style: {
-                                            color: LIGHTER_GREY,
-                                        },
-                                    }}
-                                    type="text"
-                                    defaultValue={getUser().username}
-                                    autofocus
+                                    error={newUser.username === ""}
+                                    defaultValue={user.username}
                                     {...genericProps}
                                     onChange={(event) => {
-                                        setUser({
-                                            ...user,
+                                        setNewUser({
+                                            ...newUser,
                                             username: event.target.value,
                                         });
                                     }}
                                 />
                                 <TextField
-                                    sx={{
-                                        input: {
-                                            color: "white",
-                                        },
-                                    }}
                                     label="Email"
-                                    InputProps={{ disableUnderline: true }}
+                                    error={newUser.email === ""}
                                     InputLabelProps={{
                                         style: {
                                             color: LIGHTER_GREY,
                                         },
                                     }}
-                                    type="text"
-                                    defaultValue={getUser().email}
-                                    autofocus
+                                    defaultValue={user.email}
                                     {...genericProps}
                                     onChange={(event) => {
-                                        setUser({
-                                            ...user,
+                                        setNewUser({
+                                            ...newUser,
                                             email: event.target.value,
                                         });
                                     }}
                                 />
                                 <TextField
-                                    sx={{
-                                        input: {
-                                            color: "white",
-                                        },
-                                    }}
                                     label="Code"
-                                    InputProps={{ disableUnderline: true }}
-                                    InputLabelProps={{
-                                        style: {
-                                            color: LIGHTER_GREY,
-                                        },
-                                    }}
-                                    type="text"
-                                    defaultValue={getUser().code}
-                                    autofocus
+                                    error={
+                                        newUser.code === "" ||
+                                        isNaN(newUser.code)
+                                    }
+                                    defaultValue={user.code}
                                     {...genericProps}
                                     onChange={(event) => {
-                                        setUser({
-                                            ...user,
-                                            code: Number.parseInt(
-                                                event.target.value
-                                            ),
+                                        setNewUser({
+                                            ...newUser,
+                                            code: event.target.value,
                                         });
                                     }}
                                 />
                                 <TextField
-                                    sx={{
-                                        input: {
-                                            color: "white",
-                                        },
-                                    }}
                                     label="Group"
-                                    InputProps={{ disableUnderline: true }}
-                                    InputLabelProps={{
-                                        style: {
-                                            color: LIGHTER_GREY,
-                                        },
-                                    }}
-                                    type="text"
-                                    defaultValue={getUser().group}
-                                    autofocus
+                                    error={
+                                        newUser.group === "" ||
+                                        isNaN(newUser.group)
+                                    }
+                                    defaultValue={user.group}
                                     {...genericProps}
                                     onChange={(event) => {
-                                        setUser({
-                                            ...user,
-                                            group: Number.parseInt(
-                                                event.target.value
-                                            ),
+                                        setNewUser({
+                                            ...newUser,
+                                            group: event.target.value,
                                         });
                                     }}
                                 />
                                 <TextField
-                                    sx={{
-                                        input: {
-                                            color: "white",
-                                        },
-                                    }}
                                     label="Year"
-                                    InputProps={{ disableUnderline: true }}
-                                    InputLabelProps={{
-                                        style: {
-                                            color: LIGHTER_GREY,
-                                        },
-                                    }}
-                                    type="text"
-                                    defaultValue={getUser().year}
-                                    autofocus
+                                    error={
+                                        newUser.year === "" ||
+                                        isNaN(newUser.year)
+                                    }
+                                    defaultValue={user.year}
                                     {...genericProps}
                                     onChange={(event) => {
-                                        setUser({
-                                            ...user,
-                                            year: Number.parseInt(
-                                                event.target.value
-                                            ),
+                                        setNewUser({
+                                            ...newUser,
+                                            year: event.target.value,
                                         });
                                     }}
                                 />
                             </Stack>
                             <div className="infos">
-                                <div
-                                    className="button"
-                                    onClick={() => {
-                                        updateUser(user).then((response) => {
-                                            if (response.status === 200) {
-                                                sessionStorage.setItem(
-                                                    "user",
-                                                    JSON.stringify(user)
-                                                );
-                                                setIsVisible(true);
-                                            } else setShowError(true);
-                                        });
-                                    }}
-                                >
+                                <div className="button" onClick={onSaveProfile}>
                                     Save changes
                                 </div>
                             </div>

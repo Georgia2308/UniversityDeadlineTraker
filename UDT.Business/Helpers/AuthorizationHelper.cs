@@ -42,7 +42,7 @@ namespace UDT.Business.Helpers
 				issuer: _authorizationSettings.Issuer,
 				audience: _authorizationSettings.Audience,
 				claims: claims,
-				expires: DateTime.Now.AddMinutes(30),
+				expires: DateTime.Now.AddMonths(1),
 				signingCredentials: credentials
 			);
 

@@ -92,6 +92,27 @@
 .settings-page .right .general .general-components .stack {
     width: 50%;
 }
+
+.settings-page
+    .right
+    .general
+    .general-components
+    .stack
+    .textfield
+    .css-cio0x1-MuiInputBase-root-MuiFilledInput-root:after {
+    border-bottom: 2px solid var(--PURPLE_ACCENT);
+}
+
+.settings-page
+    .right
+    .general
+    .general-components
+    .stack
+    .textfield
+    .css-cio0x1-MuiInputBase-root-MuiFilledInput-root.Mui-error:after {
+    border-bottom: 2px solid var(--RED_ACCENT);
+}
+
 /* CHANGE PROFILE PIC */
 .settings-page .right .general .general-components .change-text {
     color: white;
@@ -395,7 +416,8 @@
 .settings-page .right .appearance .button-theme {
     margin: 20px 0 50px 0;
 }
-.settings-page .right .appearance .button-theme:hover, .button-accent:hover,
+.settings-page .right .appearance .button-theme:hover,
+.button-accent:hover,
 .button-reset:hover {
     background-color: #202020;
     border: 1px solid #757575;
