@@ -13,6 +13,11 @@ export default function AlertDialogConfirm(props) {
         props.setOpen(false);
     };
 
+    const handleConfirm = () => {
+        props.setOpen(false);
+        props.onConfirm();
+    };
+
     return (
         <div>
             <Dialog open={props.open} onClose={handleClose}>
@@ -48,7 +53,7 @@ export default function AlertDialogConfirm(props) {
                     }}
                 >
                     <Button
-                        onClick={handleClose}
+                        onClick={handleConfirm}
                         style={{
                             "background-color": LIGHT_GREY,
                             color: RED_ACCENT,

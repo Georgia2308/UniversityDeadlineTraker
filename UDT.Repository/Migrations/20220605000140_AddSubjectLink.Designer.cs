@@ -10,8 +10,8 @@ using UDT.Repository;
 namespace UDT.Repository.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220603175828_AddUserSettings")]
-    partial class AddUserSettings
+    [Migration("20220605000140_AddSubjectLink")]
+    partial class AddSubjectLink
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -126,8 +126,14 @@ namespace UDT.Repository.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AccentColor")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int?>("Code")
                         .HasColumnType("int");
+
+                    b.Property<bool>("DarkMode")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
@@ -143,6 +149,9 @@ namespace UDT.Repository.Migrations
 
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("NotificationPreferences")
+                        .HasColumnType("int");
 
                     b.Property<string>("Password")
                         .HasColumnType("nvarchar(max)");

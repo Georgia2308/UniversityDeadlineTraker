@@ -11,22 +11,35 @@ namespace UDT.Repository.Migrations
                 table: "Users",
                 type: "nvarchar(max)",
                 nullable: true);
-            migrationBuilder.AddColumn<string>(
+
+            migrationBuilder.AddColumn<bool>(
                 name: "DarkMode",
                 table: "Users",
                 type: "bit",
-                nullable: false, 
-                defaultValue: 1);
-            migrationBuilder.AddColumn<string>(
+                nullable: false,
+                defaultValue: false);
+
+            migrationBuilder.AddColumn<int>(
                 name: "NotificationPreferences",
                 table: "Users",
                 type: "int",
-                nullable: false, 
+                nullable: false,
                 defaultValue: 0);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropColumn(
+                name: "AccentColor",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "DarkMode",
+                table: "Users");
+
+            migrationBuilder.DropColumn(
+                name: "NotificationPreferences",
+                table: "Users");
         }
     }
 }

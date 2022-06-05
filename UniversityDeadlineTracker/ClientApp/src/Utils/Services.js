@@ -39,6 +39,17 @@ export const updateUser = (user) => {
     return fetch(`api/users/${user.id}`, requestOptions);
 };
 
+export const deleteUser = (user) => {
+    const requestOptions = {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + getToken(),
+        },
+    };
+    return fetch(`api/users/${user.id}`, requestOptions);
+};
+
 export const getAllProfs = () => {
     const requestOptions = {
         method: "GET",
@@ -108,10 +119,9 @@ export const getSubjectsForTeacher = (id) => {
         method: "GET",
         headers: { Authorization: "Bearer " + getToken() },
     };
-    return fetch(
-        `api/subjects/assigned/${id}`,
-        requestOptions
-    ).then((data) => data.json());
+    return fetch(`api/subjects/assigned/${id}`, requestOptions).then((data) =>
+        data.json()
+    );
 };
 
 export const getSubjectById = (id) => {

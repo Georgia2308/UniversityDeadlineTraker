@@ -63,7 +63,7 @@ export const SimpleSlider = (props) => {
                 </div>
             ) : (
                 <div className="slider-no-tasks">
-                    No tasks? Go get <span className="orange">drunk</span>!
+                    No tasks? Go have <span className="orange">fun</span>!
                 </div>
             )}
         </React.Fragment>

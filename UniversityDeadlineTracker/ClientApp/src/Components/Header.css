@@ -35,7 +35,7 @@ header .orange {
 }
 
 header .title:hover .orange {
-    color: white;
+    color: white !important;
 }
 
 header .navmenu .link {

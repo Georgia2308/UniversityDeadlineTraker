@@ -9,7 +9,7 @@ import EditNotificationsIcon from "@mui/icons-material/EditNotifications";
 import BrushIcon from "@mui/icons-material/Brush";
 import EditIcon from "@mui/icons-material/Edit";
 
-import { updateUser } from "../Utils/Services";
+import { updateUser, deleteUser } from "../Utils/Services";
 import { Stack, TextField } from "@mui/material";
 import { LIGHTER_GREY, LIGHT_GREY, DARK_GREY } from "../Utils/Constants";
 import AlertDialog from "../Components/AlertDialog";
@@ -27,6 +27,9 @@ import FormLabel from "@mui/material/FormLabel";
 import { HexColorPicker } from "react-colorful";
 import AlertDialogConfirm from "../Components/AlertDialogConfirm";
 
+import { useHistory, useLocation } from "react-router-dom";
+import { Pages } from "../Utils/Enums";
+
 const SettingsPage = (props) => {
     const [user, setUser] = useState(getUser());
     const [checked, setChecked] = React.useState([true, false]);
@@ -43,6 +46,16 @@ const SettingsPage = (props) => {
     const [showConfirmReset, setShowConfirmReset] = useState(false);
     const [showConfirmAccent, setShowConfirmAccent] = useState(false);
     const inputFile = useRef(null);
+    let history = useHistory();
+
+    const onConfirmDelete = () => {
+        deleteUser(user).then((response) => {
+            if (response.status === 200) {
+                props.setToken(null, null);
+                history.push(Pages.HOME);
+            } else setShowError(true);
+        });
+    };
 
     const genericProps = {
         required: false,
@@ -146,17 +159,17 @@ const SettingsPage = (props) => {
                         alt="User"
                         className="profile-pic"
                         src={
-                            props.token && getUser().profilePictureURL
-                                ? "/" + getUser().profilePictureURL
+                            props.token && getUser()?.profilePictureURL
+                                ? "/" + getUser()?.profilePictureURL
                                 : "https://www.pngkey.com/png/full/230-2301779_best-classified-apps-default-user-profile.png"
                         }
                         sx={{ width: 60, height: 60 }}
                     />
                     <div className="names">
                         <div className="name">
-                            {getUser().firstName} {getUser().lastName}
+                            {getUser()?.firstName} {getUser()?.lastName}
                         </div>
-                        <div className="usrname">@{getUser().username}</div>
+                        <div className="usrname">@{getUser()?.username}</div>
                     </div>
                 </div>
                 <div className="hor-line"></div>
@@ -221,7 +234,7 @@ const SettingsPage = (props) => {
                                         },
                                     }}
                                     type="text"
-                                    defaultValue={getUser().firstName}
+                                    defaultValue={getUser()?.firstName}
                                     autofocus
                                     {...genericProps}
                                     onChange={(event) => {
@@ -245,7 +258,7 @@ const SettingsPage = (props) => {
                                         },
                                     }}
                                     type="text"
-                                    defaultValue={getUser().lastName}
+                                    defaultValue={getUser()?.lastName}
                                     autofocus
                                     {...genericProps}
                                     onChange={(event) => {
@@ -269,7 +282,7 @@ const SettingsPage = (props) => {
                                         },
                                     }}
                                     type="text"
-                                    defaultValue={getUser().username}
+                                    defaultValue={getUser()?.username}
                                     autofocus
                                     {...genericProps}
                                     onChange={(event) => {
@@ -293,7 +306,7 @@ const SettingsPage = (props) => {
                                         },
                                     }}
                                     type="text"
-                                    defaultValue={getUser().email}
+                                    defaultValue={getUser()?.email}
                                     autofocus
                                     {...genericProps}
                                     onChange={(event) => {
@@ -317,7 +330,7 @@ const SettingsPage = (props) => {
                                         },
                                     }}
                                     type="text"
-                                    defaultValue={getUser().code}
+                                    defaultValue={getUser()?.code}
                                     autofocus
                                     {...genericProps}
                                     onChange={(event) => {
@@ -343,7 +356,7 @@ const SettingsPage = (props) => {
                                         },
                                     }}
                                     type="text"
-                                    defaultValue={getUser().group}
+                                    defaultValue={getUser()?.group}
                                     autofocus
                                     {...genericProps}
                                     onChange={(event) => {
@@ -369,7 +382,7 @@ const SettingsPage = (props) => {
                                         },
                                     }}
                                     type="text"
-                                    defaultValue={getUser().year}
+                                    defaultValue={getUser()?.year}
                                     autofocus
                                     {...genericProps}
                                     onChange={(event) => {
@@ -395,9 +408,9 @@ const SettingsPage = (props) => {
                                         className="profile-pic-edit"
                                         src={
                                             props.token &&
-                                            getUser().profilePictureURL
+                                            getUser()?.profilePictureURL
                                                 ? "/" +
-                                                  getUser().profilePictureURL
+                                                  getUser()?.profilePictureURL
                                                 : "https://www.pngkey.com/png/full/230-2301779_best-classified-apps-default-user-profile.png"
                                         }
                                         sx={{ width: 150, height: 150 }}
@@ -540,9 +553,7 @@ const SettingsPage = (props) => {
                         <div
                             className="button-delete"
                             onClick={() => {
-                                if (true) {
-                                    setShowConfirmDeleteAcc(true);
-                                } else setShowError(true);
+                                setShowConfirmDeleteAcc(true);
                             }}
                         >
                             Delete your account
@@ -730,6 +741,7 @@ const SettingsPage = (props) => {
                 open={showConfirmDeleteAcc}
                 setOpen={setShowConfirmDeleteAcc}
                 label="Your account will be deleted"
+                onConfirm={onConfirmDelete}
             />
             <AlertDialog
                 open={showConfirmTheme}

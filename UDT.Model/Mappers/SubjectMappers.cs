@@ -14,6 +14,7 @@ namespace UDT.Model.Mappers
                 Name = subjectViewModel.Name,
                 Type = subjectViewModel.Type,
                 Year = subjectViewModel.Year,
+                Link = subjectViewModel.Link,
                 Users = subjectViewModel.Users?.Select(id => new User
                 {
                     Id = id
@@ -31,6 +32,7 @@ namespace UDT.Model.Mappers
                 Name = subject.Name,
                 Type = subject.Type,
                 Year = subject.Year,
+                Link = subject.Link,
                 Users = subject.Users?.Select(user => user.Id).ToList()
             };
 
@@ -43,7 +45,8 @@ namespace UDT.Model.Mappers
             {
                 Name = subjectCreationViewModel.Name,
                 Type = subjectCreationViewModel.Type,
-                Year = subjectCreationViewModel.Year
+                Year = subjectCreationViewModel.Year,
+                Link = subjectCreationViewModel.Link,
             };
 
             return subject;
@@ -56,6 +59,7 @@ namespace UDT.Model.Mappers
                 Name = subjectUpdateViewModel.Name,
                 Type = subjectUpdateViewModel.Type,
                 Year = subjectUpdateViewModel.Year,
+                Link = subjectUpdateViewModel.Link,
                 Users = subjectUpdateViewModel.Users?.Select(id => new User
                 {
                     Id = id

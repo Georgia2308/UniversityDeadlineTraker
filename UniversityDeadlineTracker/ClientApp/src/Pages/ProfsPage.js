@@ -23,6 +23,7 @@ import {
 } from "@mui/material";
 import { getAllProfs, getSubjectsForTeacher } from "../Utils/Services";
 import { LIGHTER_GREY, getAccentColor, LIGHT_GREY } from "../Utils/Constants";
+import { useHistory, useLocation } from "react-router-dom";
 
 const ProfsPage = (props) => {
     const [profs, setProfs] = useState([]);
@@ -185,6 +186,7 @@ export default ProfsPage;
 const Row = (props) => {
     const [open, setOpen] = React.useState(false);
     const [subjects, setSubjects] = React.useState([]);
+    let history = useHistory();
 
     useEffect(() => {
         getSubjectsForTeacher(props.prof.id).then((data) => setSubjects(data));
@@ -193,7 +195,10 @@ const Row = (props) => {
     const getSubjectLink = (subject) => {
         return (
             <div className="subject-links">
-                <span className="subject-link" onClick={() => true}>
+                <span
+                    className="subject-link"
+                    onClick={() => window.open(subject.link, "_blank")}
+                >
                     {subject.name}
                 </span>
                 <span className="subject-year"> (year {subject.year})</span>
@@ -257,6 +262,12 @@ const Row = (props) => {
                                     Subjects taught by this teacher:
                                 </div>
                                 {subjects.map(getSubjectLink)}
+                                <div className="contact-teacher">
+                                    <a href={`mailto: ${props.prof.email}`}>
+                                        Contact {props.prof.lastName}{" "}
+                                        {props.prof.firstName}
+                                    </a>
+                                </div>
                             </Typography>
                         </Box>
                     </Collapse>

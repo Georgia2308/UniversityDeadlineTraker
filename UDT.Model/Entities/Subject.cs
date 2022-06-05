@@ -10,5 +10,6 @@ namespace UDT.Model.Entities
         public SubjectType Type { get; set; }
         public int Year { get; set; }
         public List<User> Users { get; set; }
+        public string Link { get; set; }
     }
 }

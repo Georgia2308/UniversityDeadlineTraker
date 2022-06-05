@@ -39,7 +39,7 @@ export const App = () => {
                         <ProfilePage token={token} />
                     </Route>
                     <Route path={Pages.SETTINGS}>
-                        <SettingsPage token={token} />
+                        <SettingsPage token={token} setToken={setToken} />
                     </Route>
                 </Switch>
             </Router>

@@ -9,5 +9,6 @@ namespace UDT.Model.ViewModels
         public SubjectType Type { get; set; }
         public int Year { get; set; }
         public List<int> Users { get; set; }
+        public string Link { get; set; }
     }
 }
