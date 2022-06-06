@@ -9,9 +9,13 @@ import FiberManualRecordTwoToneIcon from "@mui/icons-material/FiberManualRecordT
 import ArrowRightTwoToneIcon from "@mui/icons-material/ArrowRightTwoTone";
 import { TaskCard } from "./TaskCard";
 import { ACCENT_COLOR, getAccentColor } from "../Utils/Constants.js";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { getPermissions, getUser } from "../Utils/Token";
+import AddEditTaskPopup from "../Components/AddEditTaskPopup";
 
 export const SimpleSlider = (props) => {
     let sliderRef = useRef(null);
+    const [showPopupAdd, setShowPopupAdd] = useState(false);
 
     React.useEffect(() => {
         setTimeout(() => {
@@ -52,6 +56,17 @@ export const SimpleSlider = (props) => {
         <React.Fragment>
             {props.tasks.length > 0 ? (
                 <div className="slider-component">
+                    {getPermissions() ? (
+                        <AddCircleIcon
+                            className="add-task"
+                            style={{ fontSize: "70" }}
+                            onClick={() => {
+                                setShowPopupAdd(true);
+                            }}
+                        />
+                    ) : (
+                        ""
+                    )}
                     <div className="long-arrow">
                         <div className="little-arrow">
                             <ArrowRightTwoToneIcon fontSize="large" />
@@ -66,6 +81,11 @@ export const SimpleSlider = (props) => {
                     No tasks? Go have <span className="orange">fun</span>!
                 </div>
             )}
+            <AddEditTaskPopup
+                open={showPopupAdd}
+                setOpen={setShowPopupAdd}
+                button="Add Task Card"
+            />
         </React.Fragment>
     );
 };

@@ -11,7 +11,12 @@ import EditIcon from "@mui/icons-material/Edit";
 
 import { updateUser, deleteUser } from "../Utils/Services";
 import { Stack, TextField } from "@mui/material";
-import { LIGHTER_GREY, LIGHT_GREY, DARK_GREY, ACCENT_COLOR } from "../Utils/Constants";
+import {
+    LIGHTER_GREY,
+    LIGHT_GREY,
+    DARK_GREY,
+    ACCENT_COLOR,
+} from "../Utils/Constants";
 import AlertDialog from "../Components/AlertDialog";
 import AlertDialogError from "../Components/AlertDialogError";
 import { getAccentColor } from "../Utils/Constants";
@@ -29,6 +34,7 @@ import AlertDialogConfirm from "../Components/AlertDialogConfirm";
 
 import { useHistory, useLocation } from "react-router-dom";
 import { Pages } from "../Utils/Enums";
+import { getPermissions } from "../Utils/Token";
 
 const isUserValid = (user) => {
     return (
@@ -137,36 +143,73 @@ const SettingsPage = (props) => {
     };
     const children = (
         <Box sx={{ display: "flex", flexDirection: "column", ml: 3 }}>
-            <FormControlLabel
-                label="New Task"
-                control={
-                    <Checkbox
-                        checked={checked[0]}
-                        onChange={handleChange2}
-                        sx={{
-                            color: getAccentColor(),
-                            "&.Mui-checked": {
-                                color: getAccentColor(),
-                            },
-                        }}
+            {getPermissions() ? (
+                <Stack>
+                    <FormControlLabel
+                        label="New student enroled to one of your subjects"
+                        control={
+                            <Checkbox
+                                checked={checked[0]}
+                                onChange={handleChange2}
+                                sx={{
+                                    color: getAccentColor(),
+                                    "&.Mui-checked": {
+                                        color: getAccentColor(),
+                                    },
+                                }}
+                            />
+                        }
                     />
-                }
-            />
-            <FormControlLabel
-                label="Task Graded"
-                control={
-                    <Checkbox
-                        checked={checked[1]}
-                        onChange={handleChange3}
-                        sx={{
-                            color: getAccentColor(),
-                            "&.Mui-checked": {
-                                color: getAccentColor(),
-                            },
-                        }}
+                    <FormControlLabel
+                        label="Student contacted you via email"
+                        control={
+                            <Checkbox
+                                checked={checked[1]}
+                                onChange={handleChange3}
+                                sx={{
+                                    color: getAccentColor(),
+                                    "&.Mui-checked": {
+                                        color: getAccentColor(),
+                                    },
+                                }}
+                            />
+                        }
                     />
-                }
-            />
+                </Stack>
+            ) : (
+                <Stack>
+                    <FormControlLabel
+                        label="New Task"
+                        control={
+                            <Checkbox
+                                checked={checked[0]}
+                                onChange={handleChange2}
+                                sx={{
+                                    color: getAccentColor(),
+                                    "&.Mui-checked": {
+                                        color: getAccentColor(),
+                                    },
+                                }}
+                            />
+                        }
+                    />
+                    <FormControlLabel
+                        label="Task Graded"
+                        control={
+                            <Checkbox
+                                checked={checked[1]}
+                                onChange={handleChange3}
+                                sx={{
+                                    color: getAccentColor(),
+                                    "&.Mui-checked": {
+                                        color: getAccentColor(),
+                                    },
+                                }}
+                            />
+                        }
+                    />
+                </Stack>
+            )}
         </Box>
     );
     const getPreview = (previewColor) => {
@@ -325,51 +368,57 @@ const SettingsPage = (props) => {
                                         });
                                     }}
                                 />
-                                <TextField
-                                    label="Code"
-                                    error={
-                                        newUser.code === "" ||
-                                        isNaN(newUser.code)
-                                    }
-                                    defaultValue={user.code}
-                                    {...genericTextProps}
-                                    onChange={(event) => {
-                                        setNewUser({
-                                            ...newUser,
-                                            code: event.target.value,
-                                        });
-                                    }}
-                                />
-                                <TextField
-                                    label="Group"
-                                    error={
-                                        newUser.group === "" ||
-                                        isNaN(newUser.group)
-                                    }
-                                    defaultValue={user.group}
-                                    {...genericTextProps}
-                                    onChange={(event) => {
-                                        setNewUser({
-                                            ...newUser,
-                                            group: event.target.value,
-                                        });
-                                    }}
-                                />
-                                <TextField
-                                    label="Year"
-                                    error={
-                                        newUser.year === "" ||
-                                        isNaN(newUser.year)
-                                    }
-                                    defaultValue={user.year}
-                                    {...genericTextProps}
-                                    onChange={(event) => {
-                                        setNewUser({
-                                            ...newUser,
-                                            year: event.target.value,
-                                        });
-                                    }}
-                                />
+                                {getPermissions() ? (
+                                    ""
+                                ) : (
+                                    <Stack>
+                                        <TextField
+                                            label="Code"
+                                            error={
+                                                newUser.code === "" ||
+                                                isNaN(newUser.code)
+                                            }
+                                            defaultValue={user.code}
+                                            {...genericTextProps}
+                                            onChange={(event) => {
+                                                setNewUser({
+                                                    ...newUser,
+                                                    code: event.target.value,
+                                                });
+                                            }}
+                                        />
+                                        <TextField
+                                            label="Group"
+                                            error={
+                                                newUser.group === "" ||
+                                                isNaN(newUser.group)
+                                            }
+                                            defaultValue={user.group}
+                                            {...genericTextProps}
+                                            onChange={(event) => {
+                                                setNewUser({
+                                                    ...newUser,
+                                                    group: event.target.value,
+                                                });
+                                            }}
+                                        />
+                                        <TextField
+                                            label="Year"
+                                            error={
+                                                newUser.year === "" ||
+                                                isNaN(newUser.year)
+                                            }
+                                            defaultValue={user.year}
+                                            {...genericTextProps}
+                                            onChange={(event) => {
+                                                setNewUser({
+                                                    ...newUser,
+                                                    year: event.target.value,
+                                                });
+                                            }}
+                                        />
+                                    </Stack>
+                                )}
                             </Stack>
                             <Stack>
                                 <div className="change-text">

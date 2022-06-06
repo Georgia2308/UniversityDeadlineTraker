@@ -17,6 +17,7 @@ import BackupTableIcon from "@mui/icons-material/BackupTable";
 
 import Chart from "../Components/Chart";
 import AlertDialogError from "../Components/AlertDialogError";
+import { getPermissions } from "../Utils/Token";
 
 const isUserValid = (user) => {
     return (
@@ -186,15 +187,21 @@ const ProfilePage = (props) => {
                                         ).toDateString()}
                                     </div>
                                 </div>
-                                <div className="info">
-                                    <span>Code</span>: {user.code}
-                                </div>
-                                <div className="info">
-                                    <span>Group</span>: {user.group}
-                                </div>
-                                <div className="info">
-                                    <span>Year</span>: {user.year}
-                                </div>
+                                {getPermissions() ? (
+                                    ""
+                                ) : (
+                                    <div>
+                                        <div className="info">
+                                            <span>Code</span>: {user.code}
+                                        </div>
+                                        <div className="info">
+                                            <span>Group</span>: {user.group}
+                                        </div>
+                                        <div className="info">
+                                            <span>Year</span>: {user.year}
+                                        </div>
+                                    </div>
+                                )}
                                 <div
                                     className="button"
                                     onClick={() => {
@@ -291,51 +298,57 @@ const ProfilePage = (props) => {
                                         });
                                     }}
                                 />
-                                <TextField
-                                    label="Code"
-                                    error={
-                                        newUser.code === "" ||
-                                        isNaN(newUser.code)
-                                    }
-                                    defaultValue={user.code}
-                                    {...genericProps}
-                                    onChange={(event) => {
-                                        setNewUser({
-                                            ...newUser,
-                                            code: event.target.value,
-                                        });
-                                    }}
-                                />
-                                <TextField
-                                    label="Group"
-                                    error={
-                                        newUser.group === "" ||
-                                        isNaN(newUser.group)
-                                    }
-                                    defaultValue={user.group}
-                                    {...genericProps}
-                                    onChange={(event) => {
-                                        setNewUser({
-                                            ...newUser,
-                                            group: event.target.value,
-                                        });
-                                    }}
-                                />
-                                <TextField
-                                    label="Year"
-                                    error={
-                                        newUser.year === "" ||
-                                        isNaN(newUser.year)
-                                    }
-                                    defaultValue={user.year}
-                                    {...genericProps}
-                                    onChange={(event) => {
-                                        setNewUser({
-                                            ...newUser,
-                                            year: event.target.value,
-                                        });
-                                    }}
-                                />
+                                {getPermissions() ? (
+                                    ""
+                                ) : (
+                                    <Stack>
+                                        <TextField
+                                            label="Code"
+                                            error={
+                                                newUser.code === "" ||
+                                                isNaN(newUser.code)
+                                            }
+                                            defaultValue={user.code}
+                                            {...genericProps}
+                                            onChange={(event) => {
+                                                setNewUser({
+                                                    ...newUser,
+                                                    code: event.target.value,
+                                                });
+                                            }}
+                                        />
+                                        <TextField
+                                            label="Group"
+                                            error={
+                                                newUser.group === "" ||
+                                                isNaN(newUser.group)
+                                            }
+                                            defaultValue={user.group}
+                                            {...genericProps}
+                                            onChange={(event) => {
+                                                setNewUser({
+                                                    ...newUser,
+                                                    group: event.target.value,
+                                                });
+                                            }}
+                                        />
+                                        <TextField
+                                            label="Year"
+                                            error={
+                                                newUser.year === "" ||
+                                                isNaN(newUser.year)
+                                            }
+                                            defaultValue={user.year}
+                                            {...genericProps}
+                                            onChange={(event) => {
+                                                setNewUser({
+                                                    ...newUser,
+                                                    year: event.target.value,
+                                                });
+                                            }}
+                                        />
+                                    </Stack>
+                                )}
                             </Stack>
                             <div className="infos">
                                 <div className="button" onClick={onSaveProfile}>
@@ -345,7 +358,45 @@ const ProfilePage = (props) => {
                         </div>
                     )}
                     <div className="right">
-                        {isNotChart ? (
+                        {getPermissions() ? (
+                            <div className="chart">
+                                <div className="title">
+                                    Grades and progress to each of your subject over the years:
+                                </div>
+                                {/* <Chart
+                                    data={[].concat
+                                        .apply(
+                                            [],
+                                            Object.values(userTasks).map(
+                                                (subjectUserTasks) => {
+                                                    return subjectUserTasks.map(
+                                                        (userTask) => ({
+                                                            name: new Date(
+                                                                userTask.task.deadline
+                                                            ).toDateString(),
+                                                            [userTask.task
+                                                                .subject.name]:
+                                                                userTask.grade,
+                                                        })
+                                                    );
+                                                }
+                                            )
+                                        )
+                                        .sort((a, b) => {
+                                            return (
+                                                Date.parse(a.name) -
+                                                Date.parse(b.name)
+                                            );
+                                        })}
+                                    lines={Object.values(userTasks).map(
+                                        (subjectUserTasks) => {
+                                            return subjectUserTasks[0].task
+                                                .subject.name;
+                                        }
+                                    )}
+                                /> */}
+                            </div>
+                        ) : isNotChart ? (
                             <div>
                                 <StackedLineChartIcon
                                     className="icon"

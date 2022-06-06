@@ -1,9 +1,10 @@
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import { updateUserTask } from "../Utils/Services";
 import { Status } from "../Utils/Enums";
+import { getPermissions, getUser } from "../Utils/Token";
 
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -13,13 +14,36 @@ import {
     DARKER_GREY,
     LIGHTER_GREY,
     getAccentColor,
+    RED_ACCENT,
     LIGHT_GREY,
 } from "../Utils/Constants";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import AlertDialogConfirm from "../Components/AlertDialogConfirm";
+import AlertDialogError from "../Components/AlertDialogError";
+import AddEditTaskPopup from "../Components/AddEditTaskPopup";
 
 export default function Popup(props) {
     const [status, setStatus] = React.useState(props.status);
+    const [showConfirmDeleteTask, setShowConfirmDeleteTask] = useState(false);
+    const [showError, setShowError] = useState(false);
+    const [showPopupEdit, setShowPopupEdit] = useState(false);
+
+    const onConfirmDelete = () => {
+        // deleteUser(newUser.id).then((response) => {
+        //     if (response.status === 200) {
+        //         props.setToken(null, null);
+        //         props.setUser(null);
+        //         history.push(Pages.HOME);
+        //     } else setShowError(true);
+        // });
+        if (true) {
+            handleClose();
+        } else setShowError(true);
+    };
+
     const handleClose = () => {
         props.setOpen(false);
     };
@@ -100,7 +124,7 @@ export default function Popup(props) {
                                     direction={"column"}
                                     style={{
                                         position: "relative",
-                                        height: "176px",
+                                        height: "170px",
                                     }}
                                 >
                                     <div
@@ -190,18 +214,60 @@ export default function Popup(props) {
                         color: "white",
                     }}
                 >
+                    {getPermissions() ? (
+                        <div>
+                            <EditIcon
+                                className="edit-task"
+                                style={{ fontSize: "30", color: "#e0e0e0" }}
+                                onClick={() => {
+                                    setShowPopupEdit(true);
+                                }}
+                            />
+                            <DeleteOutlineIcon
+                                className="delete-task"
+                                style={{ fontSize: "30", color: RED_ACCENT }}
+                                onClick={() => {
+                                    setShowConfirmDeleteTask(true);
+                                }}
+                            />
+                        </div>
+                    ) : (
+                        ""
+                    )}
                     <Button
                         onClick={handleClose}
-                        autoFocus
                         style={{
                             "background-color": "#878787",
-                            color: getAccentColor(),
+                            border: `2px solid ${getAccentColor()}`,
+                            color: DARKER_GREY,
                         }}
                     >
                         Close
                     </Button>
                 </DialogActions>
             </Dialog>
+            <AlertDialogConfirm
+                open={showConfirmDeleteTask}
+                setOpen={setShowConfirmDeleteTask}
+                label="Your task will be deleted"
+                onConfirm={onConfirmDelete}
+            />
+            <AlertDialogError
+                open={showError}
+                setOpen={setShowError}
+                label="Please try again"
+            />
+            <AddEditTaskPopup
+                open={showPopupEdit}
+                setOpen={setShowPopupEdit}
+                subject={props.subject}
+                title={props.title}
+                subtitle={props.subtitle}
+                penalty={props.penalty}
+                deadline={props.deadline}
+                description={props.description}                
+                button="Edit Task Card"
+            />
         </div>
     );
 }

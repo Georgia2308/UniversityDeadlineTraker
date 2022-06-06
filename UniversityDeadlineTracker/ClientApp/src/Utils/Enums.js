@@ -18,3 +18,8 @@ export const SubjectType = {
     OBLIGATORIU: 1,
     OPTIONAL: 2,
 };
+
+export const Permissions = {
+    STUDENT: 0,
+    TEACHER: 1,
+};

@@ -1,16 +1,17 @@
 ﻿import React from "react";
 import "./LoginPage.css";
-import { Pages, SubjectType } from "../Utils/Enums";
+import { Pages, Permissions, SubjectType } from "../Utils/Enums";
 import { useHistory } from "react-router-dom";
 import {
     enrollUserToSubject,
     getUnassignedSubjects,
+    getAssignedSubjects,
     getTeacherforSubject,
 } from "../Utils/Services";
 import { CircularProgress } from "@mui/material";
 import { Default } from "../Components/Default";
 import { Login } from "../Components/Login";
-import { getUser } from "../Utils/Token";
+import { getPermissions, getUser } from "../Utils/Token";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { LIGHTER_GREY, getAccentColor } from "../Utils/Constants";
 
@@ -22,10 +23,15 @@ export const LoginPage = (props) => {
 
     React.useEffect(() => {
         if (!token) return;
-
-        getUnassignedSubjects().then((data) => {
-            setSubjects(data);
-        });
+        {
+            getPermissions()
+                ? getAssignedSubjects().then((data) => {
+                      setSubjects(data);
+                  })
+                : getUnassignedSubjects().then((data) => {
+                      setSubjects(data);
+                  });
+        }
     }, [token]);
 
     const getSubjectButtons = () => {
@@ -82,7 +88,12 @@ export const LoginPage = (props) => {
                 <div className="login-page">
                     <p className="hello">
                         Hello{" "}
-                        <span className="orange">{user?.username}</span>!
+                        <span className="orange">
+                            {getPermissions()
+                                ? `${user?.firstName} ${user?.lastName}`
+                                : `${user?.username}`}
+                        </span>
+                        !
                     </p>
                     <p>
                         Welcome back to your University Task Management System!
@@ -94,8 +105,9 @@ export const LoginPage = (props) => {
                         Check your Boards!
                     </div>
                     <p className="enroll">
-                        Enroll to subjects to stay up to date with upcoming
-                        tasks!
+                        {getPermissions()
+                            ? "The subjects you are teaching:"
+                            : "Enroll to subjects to stay up to date with upcoming tasks!"}
                     </p>
                     <div className="subject-board">
                         <div className="filter" />
@@ -111,7 +123,12 @@ export const LoginPage = (props) => {
             ) : (
                 <React.Fragment>
                     <Default main />
-                    <Login token={token} setToken={setToken} user={user} setUser={setUser} />
+                    <Login
+                        token={token}
+                        setToken={setToken}
+                        user={user}
+                        setUser={setUser}
+                    />
                 </React.Fragment>
             )}
         </React.Fragment>

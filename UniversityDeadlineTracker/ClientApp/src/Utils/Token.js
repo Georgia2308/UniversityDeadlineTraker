@@ -1,5 +1,6 @@
 ﻿import { useState } from "react";
 import { ACCENT_COLOR, setAccentColor } from "./Constants";
+import { Permissions } from "./Enums";
 
 export const getToken = () => {
     return sessionStorage.getItem("token");
@@ -47,3 +48,7 @@ export const useToken = () => {
         setToken: saveToken,
     };
 };
+
+export const getPermissions = () => {
+    return getUser().role;
+}

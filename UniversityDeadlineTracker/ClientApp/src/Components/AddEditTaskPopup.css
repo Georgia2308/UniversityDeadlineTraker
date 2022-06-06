@@ -1,0 +1,8 @@
+.add-edit .textfield .css-cio0x1-MuiInputBase-root-MuiFilledInput-root:after {
+    border-bottom: 2px solid var(--PURPLE_ACCENT);
+}
+.add-edit
+    .textfield
+    .css-cio0x1-MuiInputBase-root-MuiFilledInput-root.Mui-error:after {
+    border-bottom: 2px solid var(--RED_ACCENT);
+}

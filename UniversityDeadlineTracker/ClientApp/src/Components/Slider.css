@@ -4,6 +4,7 @@
     padding-top: 50px;
     padding-left: 50px;
     padding-right: 50px;
+    position: relative;
 }
 
 .slider-component .date {
@@ -29,7 +30,7 @@
 
 .slider-component .long-arrow {
     position: absolute;
-    top: 138px;
+    top: 58px;
     background-color: white;
     height: 0.7px;
     width: 82vw;
@@ -53,4 +54,19 @@
 
 .slider-no-tasks .orange {
     color: var(--PURPLE_ACCENT);
+}
+
+.add-task {
+    position: fixed;
+    right: 31px;
+    bottom: 31px;
+    color: white;
+    cursor: pointer;
+}
+.edit-task{
+    cursor: pointer;
+}
+.delete-task {
+    margin: 0 20px 0 15px;
+    cursor: pointer;
 }
