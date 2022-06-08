@@ -22,13 +22,12 @@ import { getPermissions } from "../Utils/Token";
 const isUserValid = (user) => {
     return (
         user.username?.length > 0 &&
-        user.password?.length > 0 &&
         user.firstName?.length > 0 &&
         user.lastName?.length > 0 &&
         user.email?.length > 0 &&
-        user.group?.length > 0 &&
-        user.year?.length > 0 &&
-        user.code?.length > 0 &&
+        (user.group?.length > 0 || typeof user?.group === "number") &&
+        (user.year?.length > 0 || typeof user?.year === "number") &&
+        (user.code?.length > 0 || typeof user?.code === "number") &&
         user.profilePictureURL?.length > 0 &&
         user.dateOfBirth?.length > 0 &&
         !isNaN(user?.group) &&
@@ -361,7 +360,8 @@ const ProfilePage = (props) => {
                         {getPermissions() ? (
                             <div className="chart">
                                 <div className="title">
-                                    Grades and progress to each of your subject over the years:
+                                    Grades and progress to each of your subject
+                                    over the years:
                                 </div>
                                 {/* <Chart
                                     data={[].concat
