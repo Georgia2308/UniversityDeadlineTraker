@@ -101,6 +101,38 @@ export const getTaskById = (id) => {
     return fetch(`api/tasks/${id}`, requestOptions).then((data) => data.json());
 };
 
+export const addTask = (task) => {
+    const requestOptions = {
+        method: "POST",
+        headers: { 
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + getToken()
+        },
+        body: JSON.stringify(task),
+    };
+    return fetch(`api/tasks`, requestOptions);
+}
+
+export const deleteTask = (id) => {
+    const requestOptions = {
+        method: "DELETE",
+        headers: { Authorization: "Bearer " + getToken() },
+    };
+    return fetch(`api/tasks/${id}`, requestOptions);
+}
+
+export const editTask = (task) => {
+    const requestOptions = {
+        method: "PUT",
+        headers: { 
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + getToken()
+        },
+        body: JSON.stringify(task),
+    };
+    return fetch(`api/tasks`, requestOptions);
+}
+
 // subjects
 
 export const getTeacherforSubject = (subjectId) => {

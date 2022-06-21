@@ -128,13 +128,12 @@ export const TaskCard = (props) => {
             <Popup
                 open={showPopup}
                 setOpen={setShowPopup}
-                subject={props.item.task.subject.name}
-                title={props.item.task.title}
-                subtitle={props.item.task.subtitle}
-                penalty={props.item.task.penalty}
+                task={props.item.task}
                 status={status}
-                description={props.item.task.description}
                 subjectcolor={getSubjectColor(props.item.task.subject.id)}
+                refreshSlider={props.refreshSlider}
+                token={props.token}
+                user={props.user}
             />
         </Card>
     );

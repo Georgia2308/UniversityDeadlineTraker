@@ -3,9 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using UDT.Business.Task;
+using UDT.Model.Entities;
 using UDT.Model.Mappers;
 using UDT.Model.ViewModels;
 using UDT.Repository;
+using TaskStatus = UDT.Model.Enums.TaskStatus;
 
 namespace UDT.Business.Services
 {
@@ -22,6 +24,22 @@ namespace UDT.Business.Services
         {
             var task = TaskMappers.toEntity(taskDto);
             await _dbContext.Tasks.AddAsync(task);
+            await _dbContext.SaveChangesAsync();
+            var subject = await _dbContext.Subjects
+                .Include(s => s.Users)
+                .FirstOrDefaultAsync(s => s.Id == task.SubjectId);
+            foreach (var user in subject.Users)
+            {
+                await _dbContext.UsersTasks.AddAsync(new UserTask()
+                {
+                    TaskId = task.Id,
+                    Task = task,
+                    UserId = user.Id,
+                    User = user,
+                    Status = TaskStatus.ToDo,
+                    Grade = 0
+                });
+            }
             await _dbContext.SaveChangesAsync();
             return task;
         }
@@ -53,7 +71,7 @@ namespace UDT.Business.Services
 
         public IAsyncEnumerable<Model.Entities.Task> GetTaskFromGivenSubject(int subject)
         {
-            return  _dbContext.Tasks.Where(task => task.SubjectId == subject).AsAsyncEnumerable();
+            return _dbContext.Tasks.Where(task => task.SubjectId == subject).AsAsyncEnumerable();
         }
     }
 }

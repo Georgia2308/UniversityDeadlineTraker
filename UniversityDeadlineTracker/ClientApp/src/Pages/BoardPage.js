@@ -10,6 +10,7 @@ export const BoardPage = (props) => {
     const { user, setUser } = props.user;
     const [tasks, setTasks] = useState(null);
     const [initialSlide, setInitialSlide] = useState(null);
+    const [shouldRefreshSlider, setShouldRefreshSlider] = useState(false);
 
     useEffect(() => {
         if (!token) return;
@@ -30,7 +31,7 @@ export const BoardPage = (props) => {
                 })
             );
         });
-    }, [token]);
+    }, [token, shouldRefreshSlider]);
 
     useEffect(() => {
         if (!tasks) return;
@@ -50,8 +51,14 @@ export const BoardPage = (props) => {
                 initialSlide !== null ? (
                     <div className="board-page">
                         <SimpleSlider
+                            token={props.token}
+                            user={props.user}
                             tasks={tasks}
                             initialSlide={initialSlide}
+                            refreshSlider={{
+                                shouldRefreshSlider: shouldRefreshSlider,
+                                setShouldRefreshSlider: setShouldRefreshSlider,
+                            }}
                         />
                     </div>
                 ) : (

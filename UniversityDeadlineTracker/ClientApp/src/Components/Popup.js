@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
-import { updateUserTask } from "../Utils/Services";
+import { updateUserTask, deleteTask } from "../Utils/Services";
 import { Status } from "../Utils/Enums";
 import { getPermissions, getUser } from "../Utils/Token";
 
@@ -30,18 +30,16 @@ export default function Popup(props) {
     const [showConfirmDeleteTask, setShowConfirmDeleteTask] = useState(false);
     const [showError, setShowError] = useState(false);
     const [showPopupEdit, setShowPopupEdit] = useState(false);
+    const { shouldRefreshSlider, setShouldRefreshSlider } =
+        props.refreshSlider ?? false;
 
     const onConfirmDelete = () => {
-        // deleteUser(newUser.id).then((response) => {
-        //     if (response.status === 200) {
-        //         props.setToken(null, null);
-        //         props.setUser(null);
-        //         history.push(Pages.HOME);
-        //     } else setShowError(true);
-        // });
-        if (true) {
-            handleClose();
-        } else setShowError(true);
+        deleteTask(props.task.id).then((response) => {
+            if (response.status === 204) {
+                setShouldRefreshSlider(!shouldRefreshSlider);
+                handleClose();
+            } else setShowError(true);
+        });
     };
 
     const handleClose = () => {
@@ -89,7 +87,7 @@ export default function Popup(props) {
                                         backgroundColor: props.subjectcolor,
                                     }}
                                 >
-                                    {props.subject}
+                                    {props.task.subject.name}
                                 </div>
                                 <Stack direction={"row"}>
                                     <div
@@ -99,7 +97,7 @@ export default function Popup(props) {
                                             fontWeight: "500",
                                         }}
                                     >
-                                        {props.title}
+                                        {props.task.title}
                                     </div>
                                     <div
                                         className="card-subtitle"
@@ -109,7 +107,7 @@ export default function Popup(props) {
                                             fontWeight: "200",
                                         }}
                                     >
-                                        {props.subtitle}
+                                        {props.task.subtitle}
                                     </div>
                                 </Stack>
                             </div>
@@ -135,7 +133,7 @@ export default function Popup(props) {
                                             fontSize: "13px",
                                         }}
                                     >
-                                        {props.description}
+                                        {props.task.description}
                                     </div>
                                     <div
                                         style={{
@@ -151,7 +149,7 @@ export default function Popup(props) {
                                                 bottom: "0",
                                             }}
                                         >
-                                            {props.penalty} p/week penalty
+                                            {props.task.penalty} p/week penalty
                                         </span>
                                         <span
                                             className="card-status"
@@ -179,7 +177,8 @@ export default function Popup(props) {
                                                             : LIGHTER_GREY,
                                                 }}
                                             />
-                                            {props.status === Status.COMPLETED
+                                            {props.task.status ===
+                                            Status.COMPLETED
                                                 ? "Completed"
                                                 : "New"}
                                         </span>
@@ -192,7 +191,8 @@ export default function Popup(props) {
                                     <Checkbox
                                         size="small"
                                         checked={
-                                            props.status === Status.COMPLETED
+                                            props.task.status ===
+                                            Status.COMPLETED
                                         }
                                         onChange={handleChange}
                                         sx={{
@@ -260,13 +260,11 @@ export default function Popup(props) {
             <AddEditTaskPopup
                 open={showPopupEdit}
                 setOpen={setShowPopupEdit}
-                subject={props.subject}
-                title={props.title}
-                subtitle={props.subtitle}
-                penalty={props.penalty}
-                deadline={props.deadline}
-                description={props.description}                
+                task={props.task}
                 button="Edit Task Card"
+                token={props.token}
+                user={props.user}
+                refreshSlider={props.refreshSlider}
             />
         </div>
     );

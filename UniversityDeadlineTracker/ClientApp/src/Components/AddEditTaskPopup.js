@@ -4,6 +4,8 @@ import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import { Stack } from "@mui/material";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 import {
     DARK_GREY,
     DARKER_GREY,
@@ -12,10 +14,11 @@ import {
     RED_ACCENT,
     LIGHT_GREY,
 } from "../Utils/Constants";
-import AlertDialogConfirm from "../Components/AlertDialogConfirm";
 import AlertDialogError from "../Components/AlertDialogError";
+import AlertDialog from "../Components/AlertDialog";
 import { TextField } from "@mui/material";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
+import { addTask, editTask, getSubjectsForTeacher } from "../Utils/Services";
 
 const genericProps = {
     required: true,
@@ -35,36 +38,62 @@ const genericProps = {
     type: "text",
 };
 
-export default function Popup(props) {
-    const [status, setStatus] = React.useState(props.status);
-    const [showConfirmDeleteTask, setShowConfirmDeleteTask] = useState(false);
-    const [showError, setShowError] = useState(false);
+const isTaskValid = (task) => {
+    return (
+        task.title?.length > 0 &&
+        task.subtitle?.length > 0 &&
+        task.deadline?.length > 0 &&
+        Date.parse(task.deadline) > Date.now() &&
+        task.penalty?.length > 0 &&
+        !isNaN(task.penalty)
+    );
+};
 
-    const onConfirmDelete = () => {
-        // deleteUser(newUser.id).then((response) => {
-        //     if (response.status === 200) {
-        //         props.setToken(null, null);
-        //         props.setUser(null);
-        //         history.push(Pages.HOME);
-        //     } else setShowError(true);
-        // });
-        if (true) {
-            handleClose();
-        } else setShowError(true);
+export default function AddEditTaskPopup(props) {
+    const { token, setToken } = props.token ?? "";
+    const { user, setUser } = props.user ?? {};
+    const [task, setTask] = React.useState(props.task ?? { description: "" });
+    const [showError, setShowError] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [subjects, setSubjects] = useState([]);
+    const { shouldRefreshSlider, setShouldRefreshSlider } =
+        props.refreshSlider ?? false;
+
+    React.useEffect(() => {
+        if (!token) return;
+
+        getSubjectsForTeacher(user.id).then((data) => {
+            setSubjects(data);
+            if (!props.task) setTask({ ...task, subjectId: data[0].id });
+        });
+    }, [token]);
+
+    const onAddEditTask = () => {
+        props.task
+            ? editTask({
+                  ...task,
+                  penalty: Number.parseInt(task.penalty),
+              }).then((response) => {
+                  setShouldRefreshSlider(!shouldRefreshSlider);
+                  setShowConfirm(true);
+              })
+            : addTask({
+                  ...task,
+                  penalty: Number.parseInt(task.penalty),
+              }).then((response) => {
+                  setShouldRefreshSlider(!shouldRefreshSlider);
+                  setShowConfirm(true);
+              });
     };
 
     const handleClose = () => {
         props.setOpen(false);
     };
 
-    const handleChange = (event) => {
-        // updateUserTask({
-        //     ...props.item,
-        //     task: null,
-        //     status: event.target.checked ? Status.COMPLETED : Status.NEW,
-        // }).then((r) => {});
-        // setStatus(event.target.checked ? Status.COMPLETED : Status.NEW);
-        // AddNewtaskcard
+    const getDropdownSubjects = () => {
+        return subjects.map((subject) => (
+            <MenuItem value={subject.id}>{subject.name}</MenuItem>
+        ));
     };
 
     return (
@@ -86,60 +115,61 @@ export default function Popup(props) {
                     }}
                 >
                     <Stack direction={"row"} spacing={1}>
-                        <TextField
+                        <Select
+                            value={task.subjectId}
                             label="Subject"
-                            defaultValue={props.subject}
-                            // error={newUser.firstName === ""}
-                            autofocus
-                            {...genericProps}
                             onChange={(event) => {
-                                // setNewUser({
-                                //     ...newUser,
-                                //     firstName: event.target.value,
-                                // });
+                                setTask({
+                                    ...task,
+                                    subjectId: event.target.value,
+                                });
                             }}
-                        />
+                        >
+                            {getDropdownSubjects()}
+                        </Select>
                         <TextField
                             label="Title"
-                            // error={newUser.firstName === ""}
-                            defaultValue={props.title}
-                            autofocus
+                            error={task.title === ""}
+                            value={task.title}
+                            // defaultValue={props.task.title}
                             {...genericProps}
                             onChange={(event) => {
-                                // setNewUser({
-                                //     ...newUser,
-                                //     firstName: event.target.value,
-                                // });
+                                setTask({
+                                    ...task,
+                                    title: event.target.value,
+                                });
                             }}
                         />
                     </Stack>
                     <Stack direction={"row"} spacing={1}>
                         <TextField
                             label="Subtitle"
-                            // error={newUser.firstName === ""}
-                            defaultValue={props.subtitle}
-                            autofocus
+                            error={task.subtitle === ""}
+                            value={task.subtitle}
+                            // defaultValue={props.task.subtitle}
                             {...genericProps}
                             onChange={(event) => {
-                                // setNewUser({
-                                //     ...newUser,
-                                //     firstName: event.target.value,
-                                // });
+                                setTask({
+                                    ...task,
+                                    subtitle: event.target.value,
+                                });
                             }}
                         />
                         <TextField
                             label="Penalty"
-                            // error={
-                            //     newUser.code === "" || isNaN(newUser.code)
-                            // }
-                            defaultValue={props.penalty}
-                            autofocus
+                            error={
+                                task.penalty === "" ||
+                                (task.penalty !== undefined &&
+                                    isNaN(task.penalty))
+                            }
+                            value={task.penalty}
+                            // defaultValue={props.penalty}
                             {...genericProps}
                             onChange={(event) => {
-                                // setNewUser({
-                                //     ...newUser,
-                                //     firstName: event.target.value,
-                                // });
+                                setTask({
+                                    ...task,
+                                    penalty: event.target.value,
+                                });
                             }}
                         />
                     </Stack>
@@ -147,11 +177,15 @@ export default function Popup(props) {
                     <Stack direction={"row"} spacing={1}>
                         <TextField
                             label="Deadline"
+                            error={Date.parse(task.deadline) < Date.now()}
                             type="date"
                             required="false"
                             variant="filled"
                             className="textfield"
-                            defaultValue={props.deadline}
+                            value={new Date(task.deadline).toLocaleDateString(
+                                "en-CA"
+                            )}
+                            // defaultValue={props.deadline}
                             InputLabelProps={{
                                 shrink: true,
                                 style: {
@@ -164,14 +198,19 @@ export default function Popup(props) {
                                     color: "white",
                                 },
                             }}
+                            onChange={(event) => {
+                                setTask({
+                                    ...task,
+                                    deadline: event.target.value,
+                                });
+                            }}
                         />
                     </Stack>
                     <TextareaAutosize
                         area-label="Description"
                         placeholder="  Description"
-                        // error={newUser.firstName === ""}
-                        defaultValue={props.description}
-                        autofocus
+                        value={task.description}
+                        // defaultValue={props.description}
                         {...genericProps}
                         style={{
                             height: 200,
@@ -182,10 +221,10 @@ export default function Popup(props) {
                             },
                         }}
                         onChange={(event) => {
-                            // setNewUser({
-                            //     ...newUser,
-                            //     firstName: event.target.value,
-                            // });
+                            setTask({
+                                ...task,
+                                description: event.target.value,
+                            });
                         }}
                     />
                 </Stack>
@@ -195,7 +234,8 @@ export default function Popup(props) {
                     }}
                 >
                     <Button
-                        onClick={handleClose}
+                        onClick={onAddEditTask}
+                        disabled={!isTaskValid(task)}
                         style={{
                             "background-color": "#878787",
                             border: `2px solid ${getAccentColor()}`,
@@ -215,16 +255,20 @@ export default function Popup(props) {
                     </Button>
                 </DialogActions>
             </Dialog>
-            <AlertDialogConfirm
-                open={showConfirmDeleteTask}
-                setOpen={setShowConfirmDeleteTask}
-                label="Your task will be deleted"
-                onConfirm={onConfirmDelete}
-            />
             <AlertDialogError
                 open={showError}
                 setOpen={setShowError}
                 label="Please try again"
+            />
+            <AlertDialog
+                open={showConfirm}
+                setOpen={setShowConfirm}
+                handleClose={handleClose}
+                label={
+                    props.task
+                        ? "Task edited successfully"
+                        : "Task added successfully"
+                }
             />
         </div>
     );

@@ -11,6 +11,7 @@ import { getAccentColor, LIGHT_GREY } from "../Utils/Constants";
 export default function AlertDialog(props) {
     const handleClose = () => {
         props.setOpen(false);
+        props.handleClose();
     };
 
     return (

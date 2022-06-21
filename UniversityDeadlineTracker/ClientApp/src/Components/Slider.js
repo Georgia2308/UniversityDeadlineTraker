@@ -37,7 +37,14 @@ export const SimpleSlider = (props) => {
 
     const getCardList = () => {
         return props.tasks?.map((day) => {
-            const taskCards = day.map((item) => <TaskCard item={item} />);
+            const taskCards = day.map((item) => (
+                <TaskCard
+                    item={item}
+                    token={props.token}
+                    user={props.user}
+                    refreshSlider={props.refreshSlider}
+                />
+            ));
             return (
                 <div className="card-list-container">
                     <span className="date">
@@ -82,9 +89,12 @@ export const SimpleSlider = (props) => {
                 </div>
             )}
             <AddEditTaskPopup
+                token={props.token}
+                user={props.user}
                 open={showPopupAdd}
                 setOpen={setShowPopupAdd}
                 button="Add Task Card"
+                refreshSlider={props.refreshSlider}
             />
         </React.Fragment>
     );
