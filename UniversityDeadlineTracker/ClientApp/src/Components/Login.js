@@ -76,7 +76,7 @@ export const Login = (props) => {
             group: Number.parseInt(user.group),
             year: Number.parseInt(user.year),
             code: Number.parseInt(user.code),
-            role: 1,
+            role: 0,
             subjects: [],
         }).then((response) => {
             if (response.status === 200) onLogin();

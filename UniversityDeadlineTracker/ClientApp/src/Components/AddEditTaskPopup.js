@@ -64,7 +64,8 @@ export default function AddEditTaskPopup(props) {
 
         getSubjectsForTeacher(user.id).then((data) => {
             setSubjects(data);
-            if (!props.task) setTask({ ...task, subjectId: data[0].id });
+            if (data.length > 0 && !props.task)
+                setTask({ ...task, subjectId: data[0].id });
         });
     }, [token]);
 

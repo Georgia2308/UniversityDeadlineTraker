@@ -61,6 +61,7 @@ export const SimpleSlider = (props) => {
 
     return (
         <React.Fragment>
+            [
             {props.tasks.length > 0 ? (
                 <div className="slider-component">
                     {getPermissions() ? (
@@ -88,14 +89,18 @@ export const SimpleSlider = (props) => {
                     No tasks? Go have <span className="orange">fun</span>!
                 </div>
             )}
-            <AddEditTaskPopup
-                token={props.token}
-                user={props.user}
-                open={showPopupAdd}
-                setOpen={setShowPopupAdd}
-                button="Add Task Card"
-                refreshSlider={props.refreshSlider}
-            />
+            ,
+            {getPermissions() && (
+                <AddEditTaskPopup
+                    token={props.token}
+                    user={props.user}
+                    open={showPopupAdd}
+                    setOpen={setShowPopupAdd}
+                    button="Add Task Card"
+                    refreshSlider={props.refreshSlider}
+                />
+            )}
+            ]
         </React.Fragment>
     );
 };

@@ -61,7 +61,6 @@ namespace UniversityDeadlineTracker.Controllers
 
         [HttpPut]
         [Route("{id:int}")]
-        [AuthorizationFilter(roles: "Teacher")]
         public async Task<IActionResult> Update([FromRoute] int id,
             [FromBody] UserTaskUpdateViewModel userTaskUpdateViewModel)
         {
